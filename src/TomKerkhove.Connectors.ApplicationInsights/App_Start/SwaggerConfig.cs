@@ -1,7 +1,8 @@
 using System.Web.Http;
 using WebActivatorEx;
-using TomKerkhove.Connectors.ApplicationInsights;
 using Swashbuckle.Application;
+
+using TomKerkhove.Connectors.ApplicationInsights;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 

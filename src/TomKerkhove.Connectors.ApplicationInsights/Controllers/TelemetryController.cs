@@ -26,10 +26,10 @@ namespace TomKerkhove.Connectors.ApplicationInsights.Controllers
             }
             if (string.IsNullOrWhiteSpace(traceMetadata.Message))
             {
-                return Task.FromResult((IHttpActionResult)BadRequest($"No {nameof(traceMetadata)} was specified"));
+                return Task.FromResult((IHttpActionResult)BadRequest("No message was specified"));
             }
 
-            ApplicationInsightsTelemetry.Trace($"{traceMetadata.Message} - Typed", traceMetadata.CustomProperties);
+            ApplicationInsightsTelemetry.Trace($"{traceMetadata.Message}", traceMetadata.CustomProperties);
 
             return Task.FromResult((IHttpActionResult)Ok());
         }
