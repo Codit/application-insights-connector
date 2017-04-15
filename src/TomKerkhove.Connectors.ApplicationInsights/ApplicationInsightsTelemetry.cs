@@ -11,15 +11,15 @@ namespace TomKerkhove.Connectors.ApplicationInsights
 
         public static void Trace(string message)
         {
-            // TODO: Add validation 
-
+            Guard.AgainstNullOrWhitespace(message, nameof(message));
 
             Trace(message, new Dictionary<string, string>());
         }
 
         public static void Trace(string message, Dictionary<string, string> customProperties)
         {
-            // TODO: Add validation 
+            Guard.AgainstNullOrWhitespace(message, nameof(message));
+            Guard.AgainstNull(customProperties, nameof(customProperties));
 
             var telemetryId = GetInstrumentationKey();
             var telemetryClient = new TelemetryClient
