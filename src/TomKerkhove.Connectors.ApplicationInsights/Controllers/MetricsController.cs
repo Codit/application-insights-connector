@@ -8,9 +8,9 @@ namespace TomKerkhove.Connectors.ApplicationInsights.Controllers
     {
         [HttpPost]
         [Route("metics")]
-        public async Task<IHttpActionResult> WriteMetric(string metricName)
+        public Task<IHttpActionResult> WriteMetric(string metricName)
         {
-            return Ok();
+            return Task.FromResult((IHttpActionResult)NotFound());
         }
     }
 }

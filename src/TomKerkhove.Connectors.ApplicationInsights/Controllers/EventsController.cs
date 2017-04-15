@@ -8,9 +8,9 @@ namespace TomKerkhove.Connectors.ApplicationInsights.Controllers
     {
         [HttpPost]
         [Route("events")]
-        public async Task<IHttpActionResult> WriteEvent()
+        public Task<IHttpActionResult> WriteEvent()
         {
-            return Ok();
+            return Task.FromResult((IHttpActionResult)NotFound());
         }
     }
 }
