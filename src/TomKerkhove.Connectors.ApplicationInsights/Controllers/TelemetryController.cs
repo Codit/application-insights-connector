@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Swashbuckle.Swagger.Annotations;
@@ -16,22 +17,22 @@ namespace TomKerkhove.Connectors.ApplicationInsights.Controllers
         /// <param name="traceMetadata">Description about the requested trace</param>
         [HttpPost]
         [Route("telemetry")]
-        [SwaggerResponse(HttpStatusCode.OK)]
-        [SwaggerResponse(HttpStatusCode.BadRequest)]
-        public Task<IHttpActionResult> WriteTrace([FromBody]TraceMetadata traceMetadata)
+        [SwaggerResponse(HttpStatusCode.NoContent, description: "Trace was successfully written to Azure Application Insights")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, description: "Specified trace metadata was invalid")]
+        public IHttpActionResult WriteTraceToApplicationInsights([FromBody]TraceMetadata traceMetadata)
         {
             if (traceMetadata == null)
             {
-                return Task.FromResult((IHttpActionResult)BadRequest("No trace metadata was specified"));
+                return BadRequest("No trace metadata was specified");
             }
             if (string.IsNullOrWhiteSpace(traceMetadata.Message))
             {
-                return Task.FromResult((IHttpActionResult)BadRequest("No message was specified"));
+                return BadRequest("No message was specified");
             }
 
             ApplicationInsightsTelemetry.Trace($"{traceMetadata.Message}", traceMetadata.CustomProperties);
 
-            return Task.FromResult((IHttpActionResult)Ok());
+            return StatusCode(HttpStatusCode.NoContent);
         }
     }
 }
