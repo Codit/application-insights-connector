@@ -4,6 +4,23 @@
         <name>TomKerkhove.Connectors.ApplicationInsights</name>
     </assembly>
     <members>
+        <member name="M:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.Trace(System.String,Microsoft.ApplicationInsights.DataContracts.SeverityLevel)">
+            <summary>
+            Write a trace to Application Insights
+            </summary>
+            <param name="message">Message to trace</param>
+            <param name="severityLevel">Severity level of the trace</param>
+            <exception cref="T:System.ArgumentNullException">Exception thrown when message was not valid</exception>
+        </member>
+        <member name="M:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.Trace(System.String,Microsoft.ApplicationInsights.DataContracts.SeverityLevel,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Write a trace to Application Insights
+            </summary>
+            <param name="message">Message to trace</param>
+            <param name="severityLevel">Severity level of the trace</param>
+            <param name="customProperties">Custom properties that provide context for the specific trace</param>
+            <exception cref="T:System.ArgumentNullException">Exception thrown when parameters are not valid</exception>
+        </member>
         <member name="T:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TraceMetadata">
             <summary>
             Metadata about a trace to be made
@@ -14,12 +31,17 @@
                 Message to trace
             </summary>
         </member>
+        <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TraceMetadata.SeverityLevel">
+            <summary>
+                Severity level of the trace. Informational by default
+            </summary>
+        </member>
         <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TraceMetadata.CustomProperties">
             <summary>
                 Context about a specific trace (Optional)
             </summary>
         </member>
-        <member name="M:TomKerkhove.Connectors.ApplicationInsights.Controllers.TelemetryController.WriteTraceToApplicationInsights(TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TraceMetadata)">
+        <member name="M:TomKerkhove.Connectors.ApplicationInsights.Controllers.TelemetryController.Trace(TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TraceMetadata)">
             <summary>
             Writes a trace to Azure Application Insights
             </summary>

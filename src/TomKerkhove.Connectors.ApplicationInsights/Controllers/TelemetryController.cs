@@ -16,7 +16,7 @@ namespace TomKerkhove.Connectors.ApplicationInsights.Controllers
         [Route("telemetry")]
         [SwaggerResponse(HttpStatusCode.NoContent, description: "Trace was successfully written to Azure Application Insights")]
         [SwaggerResponse(HttpStatusCode.BadRequest, description: "Specified trace metadata was invalid")]
-        public IHttpActionResult WriteTraceToApplicationInsights([FromBody]TraceMetadata traceMetadata)
+        public IHttpActionResult Trace([FromBody]TraceMetadata traceMetadata)
         {
             if (traceMetadata == null)
             {
@@ -27,7 +27,7 @@ namespace TomKerkhove.Connectors.ApplicationInsights.Controllers
                 return BadRequest("No message was specified");
             }
 
-            ApplicationInsightsTelemetry.Trace($"{traceMetadata.Message}", traceMetadata.CustomProperties);
+            ApplicationInsightsTelemetry.Trace(traceMetadata.Message, traceMetadata.SeverityLevel, traceMetadata.CustomProperties);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

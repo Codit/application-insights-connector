@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.DataContracts;
 
 namespace TomKerkhove.Connectors.ApplicationInsights
 {
@@ -9,14 +10,27 @@ namespace TomKerkhove.Connectors.ApplicationInsights
     {
         private const string InstrumentationKeySettingName = "ApplicationInsights.InstrumentationKey";
 
-        public static void Trace(string message)
+        /// <summary>
+        /// Write a trace to Application Insights
+        /// </summary>
+        /// <param name="message">Message to trace</param>
+        /// <param name="severityLevel">Severity level of the trace</param>
+        /// <exception cref="ArgumentNullException">Exception thrown when message was not valid</exception>
+        public static void Trace(string message, SeverityLevel severityLevel)
         {
             Guard.AgainstNullOrWhitespace(message, nameof(message));
 
-            Trace(message, new Dictionary<string, string>());
+            Trace(message, severityLevel, new Dictionary<string, string>());
         }
 
-        public static void Trace(string message, Dictionary<string, string> customProperties)
+        /// <summary>
+        /// Write a trace to Application Insights
+        /// </summary>
+        /// <param name="message">Message to trace</param>
+        /// <param name="severityLevel">Severity level of the trace</param>
+        /// <param name="customProperties">Custom properties that provide context for the specific trace</param>
+        /// <exception cref="ArgumentNullException">Exception thrown when parameters are not valid</exception>
+        public static void Trace(string message, SeverityLevel severityLevel, Dictionary<string, string> customProperties)
         {
             Guard.AgainstNullOrWhitespace(message, nameof(message));
             Guard.AgainstNull(customProperties, nameof(customProperties));
@@ -27,7 +41,7 @@ namespace TomKerkhove.Connectors.ApplicationInsights
                 InstrumentationKey = telemetryId
             };
 
-            telemetryClient.TrackTrace(message, customProperties);
+            telemetryClient.TrackTrace(message, severityLevel, customProperties);
         }
 
         private static string GetInstrumentationKey()
