@@ -4,17 +4,22 @@
         <name>TomKerkhove.Connectors.ApplicationInsights</name>
     </assembly>
     <members>
-        <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.TraceMetadata.Message">
+        <member name="T:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TraceMetadata">
+            <summary>
+            Metadata about a trace to be made
+            </summary>
+        </member>
+        <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TraceMetadata.Message">
             <summary>
                 Message to trace
             </summary>
         </member>
-        <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.TraceMetadata.CustomProperties">
+        <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TraceMetadata.CustomProperties">
             <summary>
                 Context about a specific trace (Optional)
             </summary>
         </member>
-        <member name="M:TomKerkhove.Connectors.ApplicationInsights.Controllers.TelemetryController.WriteTraceToApplicationInsights(TomKerkhove.Connectors.ApplicationInsights.Contracts.TraceMetadata)">
+        <member name="M:TomKerkhove.Connectors.ApplicationInsights.Controllers.TelemetryController.WriteTraceToApplicationInsights(TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TraceMetadata)">
             <summary>
             Writes a trace to Azure Application Insights
             </summary>

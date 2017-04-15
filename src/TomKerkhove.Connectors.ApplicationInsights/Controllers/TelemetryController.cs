@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Net;
 using System.Web.Http;
 using Swashbuckle.Swagger.Annotations;
-using TomKerkhove.Connectors.ApplicationInsights.Contracts;
+using TomKerkhove.Connectors.ApplicationInsights.Contracts.v1;
 
 namespace TomKerkhove.Connectors.ApplicationInsights.Controllers
 {
