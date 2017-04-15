@@ -2,8 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
-namespace TomKerkhove.Connectors.ApplicationInsights.Contracts
+namespace TomKerkhove.Connectors.ApplicationInsights.Contracts.v1
 {
+    /// <summary>
+    /// Metadata about a trace to be made
+    /// </summary>
     [DataContract]
     public class TraceMetadata
     {
