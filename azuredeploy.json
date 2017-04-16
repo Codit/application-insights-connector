@@ -9,7 +9,27 @@
             "type": "string"
         },
         "siteLocation": {
-            "type": "string"
+            "type": "string",
+            "allowedValues": [
+                "West US",
+                "East US",
+                "East US 2",
+                "Central US",
+                "South Central US",
+                "North Central US",
+                "North Europe",
+                "West Europe",
+                "East Asia",
+                "Southeast Asia",
+                "Japan West",
+                "Japan East",
+                "Brazil South",
+                "Australia East",
+                "Australia Southeast",
+                "Central India",
+                "South India",
+                "West India"
+        ]
         },
         "sku": {
             "type": "string",
