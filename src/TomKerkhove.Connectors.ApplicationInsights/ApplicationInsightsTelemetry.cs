@@ -10,13 +10,40 @@ namespace TomKerkhove.Connectors.ApplicationInsights
     {
         private const string InstrumentationKeySettingName = "ApplicationInsights.InstrumentationKey";
 
+        private readonly string _instrumentationKey;
+        private readonly TelemetryClient _telemetryClient;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public ApplicationInsightsTelemetry() : this(instrumentationKey: string.Empty)
+        {
+
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="instrumentationKey">Instrumentation key to use</param>
+        public ApplicationInsightsTelemetry(string instrumentationKey)
+        {
+            _instrumentationKey = string.IsNullOrWhiteSpace(instrumentationKey)
+                ? GetInstrumentationKey()
+                : instrumentationKey;
+
+            _telemetryClient = new TelemetryClient
+            {
+                InstrumentationKey = _instrumentationKey
+            };
+        }
+
         /// <summary>
         /// Write a trace to Application Insights
         /// </summary>
         /// <param name="message">Message to trace</param>
         /// <param name="severityLevel">Severity level of the trace</param>
         /// <exception cref="ArgumentNullException">Exception thrown when message was not valid</exception>
-        public static void Trace(string message, SeverityLevel severityLevel)
+        public void Trace(string message, SeverityLevel severityLevel)
         {
             Guard.AgainstNullOrWhitespace(message, nameof(message));
 
@@ -30,21 +57,15 @@ namespace TomKerkhove.Connectors.ApplicationInsights
         /// <param name="severityLevel">Severity level of the trace</param>
         /// <param name="customProperties">Custom properties that provide context for the specific trace</param>
         /// <exception cref="ArgumentNullException">Exception thrown when parameters are not valid</exception>
-        public static void Trace(string message, SeverityLevel severityLevel, Dictionary<string, string> customProperties)
+        public void Trace(string message, SeverityLevel severityLevel, Dictionary<string, string> customProperties)
         {
             Guard.AgainstNullOrWhitespace(message, nameof(message));
             Guard.AgainstNull(customProperties, nameof(customProperties));
 
-            var telemetryId = GetInstrumentationKey();
-            var telemetryClient = new TelemetryClient
-            {
-                InstrumentationKey = telemetryId
-            };
-
-            telemetryClient.TrackTrace(message, severityLevel, customProperties);
+            _telemetryClient.TrackTrace(message, severityLevel, customProperties);
         }
 
-        private static string GetInstrumentationKey()
+        private string GetInstrumentationKey()
         {
             var instrumentationKey = ConfigurationManager.AppSettings[InstrumentationKeySettingName];
 
