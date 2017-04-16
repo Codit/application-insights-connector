@@ -5,6 +5,8 @@ Deploy this Web API as an Azure API App and use it in your Azure Logic Apps to s
 
 This is a workaround for this [UserVoice item](https://feedback.azure.com/forums/287593-logic-apps/suggestions/16833526-supporting-ai-for-logic-apps)
 
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
+
 # Features
 Here is a list of the current features:
 
