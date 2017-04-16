@@ -9,36 +9,38 @@ namespace TomKerkhove.Connectors.ApplicationInsights
     public class ApplicationInsightsTelemetry
     {
         private const string InstrumentationKeySettingName = "ApplicationInsights.InstrumentationKey";
-
-        private readonly string _instrumentationKey;
         private readonly TelemetryClient _telemetryClient;
 
         /// <summary>
-        /// Constructor
+        ///     Instrumentation key used to write to Azure Application Insights
+        /// </summary>
+        public string InstrumentationKey { get; }
+
+        /// <summary>
+        ///     Constructor
         /// </summary>
         public ApplicationInsightsTelemetry() : this(instrumentationKey: string.Empty)
         {
-
         }
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="instrumentationKey">Instrumentation key to use</param>
         public ApplicationInsightsTelemetry(string instrumentationKey)
         {
-            _instrumentationKey = string.IsNullOrWhiteSpace(instrumentationKey)
+            InstrumentationKey = string.IsNullOrWhiteSpace(instrumentationKey)
                 ? GetInstrumentationKey()
                 : instrumentationKey;
 
             _telemetryClient = new TelemetryClient
             {
-                InstrumentationKey = _instrumentationKey
+                InstrumentationKey = InstrumentationKey
             };
         }
 
         /// <summary>
-        /// Write a trace to Application Insights
+        ///     Write a trace to Application Insights
         /// </summary>
         /// <param name="message">Message to trace</param>
         /// <param name="severityLevel">Severity level of the trace</param>
@@ -51,7 +53,7 @@ namespace TomKerkhove.Connectors.ApplicationInsights
         }
 
         /// <summary>
-        /// Write a trace to Application Insights
+        ///     Write a trace to Application Insights
         /// </summary>
         /// <param name="message">Message to trace</param>
         /// <param name="severityLevel">Severity level of the trace</param>
