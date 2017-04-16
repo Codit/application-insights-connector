@@ -118,7 +118,7 @@
     <Compile Include="Contracts\v1\TraceMetadata.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\MetricsController.cs" />
-    <Compile Include="Controllers\TelemetryController.cs" />
+    <Compile Include="Controllers\TracesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

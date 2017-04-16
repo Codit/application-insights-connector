@@ -5,8 +5,11 @@ using TomKerkhove.Connectors.ApplicationInsights.Contracts.v1;
 
 namespace TomKerkhove.Connectors.ApplicationInsights.Controllers
 {
+    /// <summary>
+    /// Provides operations related to tracing to Azure Application Insights
+    /// </summary>
     [RoutePrefix("api/v1")]
-    public class TelemetryController : ApiController
+    public class TracesController : ApiController
     {
         /// <summary>
         /// Writes a trace to Azure Application Insights
