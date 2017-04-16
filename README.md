@@ -11,6 +11,7 @@ Here is a list of the current features:
 - **Support for writing traces**
 	- Specify severity level. *(Optional)*
 - **Support for metrics**
+	- Support for simple metrics as well as sampling
 - **Support for custom events**
 - **Support for providing context** *(optional*)
 	- Provide more information about the current context of each trace, custom event & metric
