@@ -40,28 +40,17 @@ namespace TomKerkhove.Connectors.ApplicationInsights
         }
 
         /// <summary>
-        ///     Write a custom event to Application Insights
+        ///     Write an event to Application Insights
         /// </summary>
-        /// <param name="eventName">Name of the custom event occuring</param>
+        /// <param name="eventName">Name of the event occuring</param>
+        /// <param name="customProperties">Custom properties that provide context for the specific event</param>
         /// <exception cref="ArgumentNullException">Exception thrown when event name was not valid</exception>
-        public void TrackCustomEvent(string eventName)
+        public void TrackEvent(string eventName, Dictionary<string, string> customProperties)
         {
             Guard.AgainstNullOrWhitespace(eventName, nameof(eventName));
-
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        ///     Write a trace to Application Insights
-        /// </summary>
-        /// <param name="message">Message to trace</param>
-        /// <param name="severityLevel">Severity level of the trace</param>
-        /// <exception cref="ArgumentNullException">Exception thrown when message was not valid</exception>
-        public void TrackTrace(string message, SeverityLevel severityLevel)
-        {
-            Guard.AgainstNullOrWhitespace(message, nameof(message));
-
-            TrackTrace(message, severityLevel, new Dictionary<string, string>());
+            Guard.AgainstNull(customProperties, nameof(customProperties));
+            
+            _telemetryClient.TrackEvent(eventName, customProperties);
         }
 
         /// <summary>
