@@ -17,7 +17,8 @@
                 "Free",
                 "Shared",
                 "Basic",
-                "Standard"
+                "Standard",
+                "Premium"
             ],
             "defaultValue": "Free"
         },
@@ -75,10 +76,16 @@
                     "properties": {
                         "appSettings": [
                             {
-                                "name": "defaultApplicationInsightsTelemetryId",
+                                "name": "ApplicationInsights.InstrumentationKey",
                                 "value": "[parameters('defaultApplicationInsightsTelemetryId')]"
                             }
-                        ]
+                        ],
+                        "cors": {
+                            "allowedOrigins": ["*"]
+                        },
+                        "apiDefinition": {
+                            "url": "[concat('https://', parameters('siteName'), '.azurewebsites.net/swagger/docs/v1')]"
+                        }
                     }
                 }
             ]
