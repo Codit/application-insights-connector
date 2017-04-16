@@ -7,10 +7,10 @@ using Microsoft.ApplicationInsights.DataContracts;
 namespace TomKerkhove.Connectors.ApplicationInsights.Contracts.v1
 {
     /// <summary>
-    /// Metadata about a trace to be made
+    ///     Metadata about a trace to be made
     /// </summary>
     [DataContract]
-    public class TraceMetadata
+    public class TraceMetadata : TelemetryMetadata
     {
         /// <summary>
         ///     Message to trace

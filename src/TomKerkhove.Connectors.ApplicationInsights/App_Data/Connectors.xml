@@ -4,9 +4,25 @@
         <name>TomKerkhove.Connectors.ApplicationInsights</name>
     </assembly>
     <members>
+        <member name="P:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.InstrumentationKey">
+            <summary>
+                Instrumentation key used to write to Azure Application Insights
+            </summary>
+        </member>
+        <member name="M:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.#ctor">
+            <summary>
+                Constructor
+            </summary>
+        </member>
+        <member name="M:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.#ctor(System.String)">
+            <summary>
+                Constructor
+            </summary>
+            <param name="instrumentationKey">Instrumentation key to use</param>
+        </member>
         <member name="M:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.Trace(System.String,Microsoft.ApplicationInsights.DataContracts.SeverityLevel)">
             <summary>
-            Write a trace to Application Insights
+                Write a trace to Application Insights
             </summary>
             <param name="message">Message to trace</param>
             <param name="severityLevel">Severity level of the trace</param>
@@ -14,16 +30,21 @@
         </member>
         <member name="M:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.Trace(System.String,Microsoft.ApplicationInsights.DataContracts.SeverityLevel,System.Collections.Generic.Dictionary{System.String,System.String})">
             <summary>
-            Write a trace to Application Insights
+                Write a trace to Application Insights
             </summary>
             <param name="message">Message to trace</param>
             <param name="severityLevel">Severity level of the trace</param>
             <param name="customProperties">Custom properties that provide context for the specific trace</param>
             <exception cref="T:System.ArgumentNullException">Exception thrown when parameters are not valid</exception>
         </member>
+        <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TelemetryMetadata.InstrumentationKey">
+            <summary>
+                Instrumentation key of the Application Insights instance to send to (Optional)
+            </summary>
+        </member>
         <member name="T:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TraceMetadata">
             <summary>
-            Metadata about a trace to be made
+                Metadata about a trace to be made
             </summary>
         </member>
         <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TraceMetadata.Message">
@@ -41,7 +62,12 @@
                 Context about a specific trace (Optional)
             </summary>
         </member>
-        <member name="M:TomKerkhove.Connectors.ApplicationInsights.Controllers.TelemetryController.Trace(TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TraceMetadata)">
+        <member name="T:TomKerkhove.Connectors.ApplicationInsights.Controllers.TracesController">
+            <summary>
+            Provides operations related to tracing to Azure Application Insights
+            </summary>
+        </member>
+        <member name="M:TomKerkhove.Connectors.ApplicationInsights.Controllers.TracesController.Trace(TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TraceMetadata)">
             <summary>
             Writes a trace to Azure Application Insights
             </summary>
