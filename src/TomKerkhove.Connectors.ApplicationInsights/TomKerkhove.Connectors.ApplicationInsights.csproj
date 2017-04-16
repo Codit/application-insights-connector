@@ -121,6 +121,7 @@
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\MetricsController.cs" />
     <Compile Include="Controllers\TracesController.cs" />
+    <Compile Include="Extensions\IDictionaryExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
