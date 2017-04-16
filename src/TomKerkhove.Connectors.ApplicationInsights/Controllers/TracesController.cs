@@ -31,7 +31,7 @@ namespace TomKerkhove.Connectors.ApplicationInsights.Controllers
             }
 
             var applicationInsightsTelemetry = new ApplicationInsightsTelemetry(traceMetadata.InstrumentationKey);
-            applicationInsightsTelemetry.Trace(traceMetadata.Message, traceMetadata.SeverityLevel, traceMetadata.CustomProperties);
+            applicationInsightsTelemetry.TrackTrace(traceMetadata.Message, traceMetadata.SeverityLevel, traceMetadata.CustomProperties);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

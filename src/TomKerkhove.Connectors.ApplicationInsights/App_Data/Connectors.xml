@@ -20,7 +20,14 @@
             </summary>
             <param name="instrumentationKey">Instrumentation key to use</param>
         </member>
-        <member name="M:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.Trace(System.String,Microsoft.ApplicationInsights.DataContracts.SeverityLevel)">
+        <member name="M:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.TrackCustomEvent(System.String)">
+            <summary>
+                Write a custom event to Application Insights
+            </summary>
+            <param name="eventName">Name of the custom event occuring</param>
+            <exception cref="T:System.ArgumentNullException">Exception thrown when event name was not valid</exception>
+        </member>
+        <member name="M:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.TrackTrace(System.String,Microsoft.ApplicationInsights.DataContracts.SeverityLevel)">
             <summary>
                 Write a trace to Application Insights
             </summary>
@@ -28,7 +35,7 @@
             <param name="severityLevel">Severity level of the trace</param>
             <exception cref="T:System.ArgumentNullException">Exception thrown when message was not valid</exception>
         </member>
-        <member name="M:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.Trace(System.String,Microsoft.ApplicationInsights.DataContracts.SeverityLevel,System.Collections.Generic.Dictionary{System.String,System.String})">
+        <member name="M:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.TrackTrace(System.String,Microsoft.ApplicationInsights.DataContracts.SeverityLevel,System.Collections.Generic.Dictionary{System.String,System.String})">
             <summary>
                 Write a trace to Application Insights
             </summary>
