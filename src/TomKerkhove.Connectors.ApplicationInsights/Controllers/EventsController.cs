@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Eventing.Reader;
-using System.Net;
-using System.Threading.Tasks;
+﻿using System.Net;
 using System.Web.Http;
 using Swashbuckle.Swagger.Annotations;
 

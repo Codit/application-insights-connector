@@ -11,6 +11,8 @@ Here is a list of the current features:
 - **Support for writing traces**
 	- Specify custom properties to provide context. *(Optional)*
 	- Specify severity level. *(Optional)*
+- **Support for custom events**
+	- Specify custom properties to provide context. *(Optional)*
 - **Support for cross Application Insights usage**
 	- Specify a fixed telemetry id on the API App itself for all requests
 	- Specify the telemetry id for each request to be more flexible and re-use one API App for multiple instances
