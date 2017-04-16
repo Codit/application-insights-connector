@@ -39,7 +39,7 @@
         </member>
         <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TelemetryMetadata.InstrumentationKey">
             <summary>
-                Telemetry Id of the Application Insights instance to send to (Optional)
+                Instrumentation key of the Application Insights instance to send to (Optional)
             </summary>
         </member>
         <member name="T:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TraceMetadata">

@@ -6,7 +6,7 @@ namespace TomKerkhove.Connectors.ApplicationInsights.Contracts.v1
     public class TelemetryMetadata
     {
         /// <summary>
-        ///     Telemetry Id of the Application Insights instance to send to (Optional)
+        ///     Instrumentation key of the Application Insights instance to send to (Optional)
         /// </summary>
         [DataMember]
         public string InstrumentationKey { get; set; }
