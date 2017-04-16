@@ -13,7 +13,8 @@ namespace TomKerkhove.Connectors.ApplicationInsights.Controllers
         /// </summary>
         /// <param name="metricMetadata">Metadata concerning the metric to track</param>
         [HttpPost]
-        [Route("metics")]
+        [Route("metrics")]
+        [SwaggerOperation("metrics")]
         [SwaggerResponse(HttpStatusCode.NoContent, description: "Metric was successfully written to Azure Application Insights")]
         [SwaggerResponse(HttpStatusCode.BadRequest, description: "Specified metric metadata was invalid")]
         public IHttpActionResult Metric([FromBody]Contracts.v1.BasicMetricMetadata metricMetadata)
@@ -38,7 +39,8 @@ namespace TomKerkhove.Connectors.ApplicationInsights.Controllers
         /// </summary>
         /// <param name="metricMetadata">Metadata concerning the metric to track</param>
         [HttpPost]
-        [Route("metics/sampling")]
+        [Route("metrics/sampling")]
+        [SwaggerOperation("metrics/sampling")]
         [SwaggerResponse(HttpStatusCode.NoContent, description: "Metric was successfully written to Azure Application Insights")]
         [SwaggerResponse(HttpStatusCode.BadRequest, description: "Specified metric metadata was invalid")]
         public IHttpActionResult Metric([FromBody]Contracts.v1.SampledMetricMetadata metricMetadata)
