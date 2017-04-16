@@ -247,7 +247,7 @@ namespace TomKerkhove.Connectors.ApplicationInsights
 
         private static string GetXmlCommentsPath()
         {
-            return HostingEnvironment.MapPath("~/App_Data/Connectors.xml");
+            return HostingEnvironment.MapPath("~/Docs/Swagger.xml");
         }
     }
 }
