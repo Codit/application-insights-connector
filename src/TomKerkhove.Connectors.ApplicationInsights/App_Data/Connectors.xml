@@ -24,8 +24,21 @@
             <summary>
                 Write an metric to Application Insights
             </summary>
-            <param name="metricName">Name of the metric</param>
-            <param name="metricValue">Value of the metric</param>
+            <param name="name">Name of the metric</param>
+            <param name="value">Value of the metric</param>
+            <param name="customProperties">Custom properties that provide context for the specific metric</param>
+            <exception cref="T:System.ArgumentNullException">Exception thrown when event name was not valid</exception>
+        </member>
+        <member name="M:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.TrackSampledMetric(System.String,System.Double,System.Nullable{System.Int32},System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Double},System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+                Write an metric to Application Insights
+            </summary>
+            <param name="name">Name of the metric</param>
+            <param name="sum">Total sum of all samples taken in this metric</param>
+            <param name="count">Total count of samples in this metric</param>
+            <param name="max">Maximum value of this metric</param>
+            <param name="min">Minimum value of this metric</param>
+            <param name="standardDeviation">Standard deviation of this metric</param>
             <param name="customProperties">Custom properties that provide context for the specific metric</param>
             <exception cref="T:System.ArgumentNullException">Exception thrown when event name was not valid</exception>
         </member>
@@ -33,7 +46,7 @@
             <summary>
                 Write an event to Application Insights
             </summary>
-            <param name="eventName">Name of the event occuring</param>
+            <param name="name">Name of the event occuring</param>
             <param name="customProperties">Custom properties that provide context for the specific event</param>
             <exception cref="T:System.ArgumentNullException">Exception thrown when event name was not valid</exception>
         </member>
@@ -46,6 +59,36 @@
             <param name="customProperties">Custom properties that provide context for the specific trace</param>
             <exception cref="T:System.ArgumentNullException">Exception thrown when parameters are not valid</exception>
         </member>
+        <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.BasicMetricMetadata.Value">
+            <summary>
+                Value of the metric
+            </summary>
+        </member>
+        <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.SampledMetricMetadata.Sum">
+            <summary>
+                Total sum of all samples taken in this metric
+            </summary>
+        </member>
+        <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.SampledMetricMetadata.Count">
+            <summary>
+                Total count of samples in this metric
+            </summary>
+        </member>
+        <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.SampledMetricMetadata.Max">
+            <summary>
+                Maximum value of this metric
+            </summary>
+        </member>
+        <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.SampledMetricMetadata.Min">
+            <summary>
+                Minimum value of this metric
+            </summary>
+        </member>
+        <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.SampledMetricMetadata.StandardDeviation">
+            <summary>
+                Standard deviation of this metric
+            </summary>
+        </member>
         <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.EventMetadata.Name">
             <summary>
                 Name of the event
@@ -54,11 +97,6 @@
         <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.MetricMetadata.Name">
             <summary>
                 Name of the metric
-            </summary>
-        </member>
-        <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.MetricMetadata.Value">
-            <summary>
-                Value of the metric
             </summary>
         </member>
         <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TelemetryMetadata.InstrumentationKey">
@@ -92,7 +130,13 @@
             </summary>
             <param name="eventMetadata">Metadata concerning the event to track</param>
         </member>
-        <member name="M:TomKerkhove.Connectors.ApplicationInsights.Controllers.MetricsController.Metric(TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.MetricMetadata)">
+        <member name="M:TomKerkhove.Connectors.ApplicationInsights.Controllers.MetricsController.Metric(TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.BasicMetricMetadata)">
+            <summary>
+            Tracks a custom metric to Azure Application Insights
+            </summary>
+            <param name="metricMetadata">Metadata concerning the metric to track</param>
+        </member>
+        <member name="M:TomKerkhove.Connectors.ApplicationInsights.Controllers.MetricsController.Metric(TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.SampledMetricMetadata)">
             <summary>
             Tracks a custom metric to Azure Application Insights
             </summary>
@@ -128,6 +172,16 @@
             <param name="callerMemberName">Information about the source of the issue. It is autogenerated so should not be supplied</param>
             <param name="callerFilePath">Information about the source of the issue. It is autogenerated so should not be supplied</param>
             <param name="callerLineNumber">Information about the source of the issue. It is autogenerated so should not be supplied</param>
+        </member>
+        <member name="M:System.Collections.Generic.IDictionaryExtensions.AddRange``2(System.Collections.Generic.IDictionary{``0,``1},System.Collections.Generic.IDictionary{``0,``1})">
+            <summary>
+            Copies over a dictionary into another one
+            </summary>
+            <typeparam name="TKey">Type of the key</typeparam>
+            <typeparam name="TValue">Type of the values</typeparam>
+            <param name="destination">Dictionary that will contain all entries from both dictionary</param>
+            <param name="source">Dictionary to copy over</param>
+            <exception cref="T:System.InvalidOperationException">Exception thrown when key from source dictionary already exists in the destionation dictionary</exception>
         </member>
     </members>
 </doc>

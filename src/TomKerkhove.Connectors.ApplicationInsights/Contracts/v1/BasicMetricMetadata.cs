@@ -5,19 +5,19 @@ using System.Runtime.Serialization;
 namespace TomKerkhove.Connectors.ApplicationInsights.Contracts.v1
 {
     [DataContract]
-    public class MetricMetadata : TelemetryMetadata
+    public class BasicMetricMetadata:MetricMetadata
     {
         /// <summary>
-        ///     Name of the metric
+        ///     Value of the metric
         /// </summary>
         [Required]
         [DataMember]
-        [DefaultValue("Name of the metric")]
-        public string Name { get; set; }
+        [DefaultValue(0)]
+        public double Value { get; set; }
 
         public override string ToString()
         {
-            return $"{nameof(EventMetadata)} - {nameof(Name)}: {Name}. General metadata: {base.ToString()}";
+            return $"{nameof(EventMetadata)} - {nameof(Name)}: {Name}, {nameof(Value)}: {Value}. General metadata: {base.ToString()}";
         }
     }
 }

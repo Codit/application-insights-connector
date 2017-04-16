@@ -42,30 +42,61 @@ namespace TomKerkhove.Connectors.ApplicationInsights
         /// <summary>
         ///     Write an metric to Application Insights
         /// </summary>
-        /// <param name="metricName">Name of the metric</param>
-        /// <param name="metricValue">Value of the metric</param>
+        /// <param name="name">Name of the metric</param>
+        /// <param name="value">Value of the metric</param>
         /// <param name="customProperties">Custom properties that provide context for the specific metric</param>
         /// <exception cref="ArgumentNullException">Exception thrown when event name was not valid</exception>
-        public void TrackMetric(string metricName, double metricValue, Dictionary<string, string> customProperties)
+        public void TrackMetric(string name, double value, Dictionary<string, string> customProperties)
         {
-            Guard.AgainstNullOrWhitespace(metricName, nameof(metricName));
+            Guard.AgainstNullOrWhitespace(name, nameof(name));
             Guard.AgainstNull(customProperties, nameof(customProperties));
-            
-            _telemetryClient.TrackMetric(metricName, metricValue, customProperties);
+
+            _telemetryClient.TrackMetric(name, value, customProperties);
+        }
+
+        /// <summary>
+        ///     Write an metric to Application Insights
+        /// </summary>
+        /// <param name="name">Name of the metric</param>
+        /// <param name="sum">Total sum of all samples taken in this metric</param>
+        /// <param name="count">Total count of samples in this metric</param>
+        /// <param name="max">Maximum value of this metric</param>
+        /// <param name="min">Minimum value of this metric</param>
+        /// <param name="standardDeviation">Standard deviation of this metric</param>
+        /// <param name="customProperties">Custom properties that provide context for the specific metric</param>
+        /// <exception cref="ArgumentNullException">Exception thrown when event name was not valid</exception>
+        public void TrackSampledMetric(string name, double sum, int? count, double? max, double? min, double? standardDeviation, Dictionary<string, string> customProperties)
+        {
+            Guard.AgainstNullOrWhitespace(name, nameof(name));
+            Guard.AgainstNull(customProperties, nameof(customProperties));
+
+            var metricTelemetry = new MetricTelemetry
+            {
+                Name = name,
+                Sum = sum,
+                Count = count,
+                Max = max,
+                Min = min,
+                StandardDeviation = standardDeviation
+            };
+
+            metricTelemetry.Properties.AddRange(customProperties);
+
+            _telemetryClient.TrackMetric(metricTelemetry);
         }
 
         /// <summary>
         ///     Write an event to Application Insights
         /// </summary>
-        /// <param name="eventName">Name of the event occuring</param>
+        /// <param name="name">Name of the event occuring</param>
         /// <param name="customProperties">Custom properties that provide context for the specific event</param>
         /// <exception cref="ArgumentNullException">Exception thrown when event name was not valid</exception>
-        public void TrackEvent(string eventName, Dictionary<string, string> customProperties)
+        public void TrackEvent(string name, Dictionary<string, string> customProperties)
         {
-            Guard.AgainstNullOrWhitespace(eventName, nameof(eventName));
+            Guard.AgainstNullOrWhitespace(name, nameof(name));
             Guard.AgainstNull(customProperties, nameof(customProperties));
 
-            _telemetryClient.TrackEvent(eventName, customProperties);
+            _telemetryClient.TrackEvent(name, customProperties);
         }
 
         /// <summary>
