@@ -5,7 +5,7 @@
         "siteName": {
             "type": "string"
         },
-        "hostingPlanName": {
+        "appServicePlanName": {
             "type": "string"
         },
         "siteLocation": {
@@ -59,11 +59,11 @@
     "resources": [
         {
             "apiVersion": "2014-06-01",
-            "name": "[parameters('hostingPlanName')]",
+            "name": "[parameters('appServicePlanName')]",
             "type": "Microsoft.Web/serverFarms",
             "location": "[parameters('siteLocation')]",
             "properties": {
-                "name": "[parameters('hostingPlanName')]",
+                "name": "[parameters('appServicePlanName')]",
                 "sku": "[parameters('sku')]",
                 "workerSize": "[parameters('workerSize')]",
                 "numberOfWorkers": 1
@@ -76,14 +76,14 @@
             "kind": "api",
             "location": "[parameters('siteLocation')]",
             "dependsOn": [
-                "[concat('Microsoft.Web/serverFarms/', parameters('hostingPlanName'))]"
+                "[concat('Microsoft.Web/serverFarms/', parameters('appServicePlanName'))]"
             ],
             "tags": {
-                "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]": "empty"
+                "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', parameters('appServicePlanName'))]": "empty"
             },
             "properties": {
                 "name": "[parameters('siteName')]",
-                "serverFarm": "[parameters('hostingPlanName')]"
+                "serverFarm": "[parameters('appServicePlanName')]"
             },
             "resources": [
                 {
