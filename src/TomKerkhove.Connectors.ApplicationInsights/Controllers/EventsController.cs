@@ -13,9 +13,9 @@ namespace TomKerkhove.Connectors.ApplicationInsights.Controllers
         /// <param name="eventMetadata">Metadata concerning the event to track</param>
         [HttpPost]
         [Route("events")]
-        [SwaggerResponse(HttpStatusCode.NoContent, description: "Trace was successfully written to Azure Application Insights")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, description: "Specified trace metadata was invalid")]
-        public IHttpActionResult WriteEvent([FromBody]Contracts.v1.EventMetadata eventMetadata)
+        [SwaggerResponse(HttpStatusCode.NoContent, description: "Event was successfully written to Azure Application Insights")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, description: "Specified event metadata was invalid")]
+        public IHttpActionResult Event([FromBody]Contracts.v1.EventMetadata eventMetadata)
         {
             if (eventMetadata == null)
             {

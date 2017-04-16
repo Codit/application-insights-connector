@@ -114,12 +114,16 @@
     <Compile Include="ApplicationInsightsTelemetry.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Contracts\v1\BasicMetricMetadata.cs" />
+    <Compile Include="Contracts\v1\SampledMetricMetadata.cs" />
     <Compile Include="Contracts\v1\EventMetadata.cs" />
+    <Compile Include="Contracts\v1\MetricMetadata.cs" />
     <Compile Include="Contracts\v1\TelemetryMetadata.cs" />
     <Compile Include="Contracts\v1\TraceMetadata.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\MetricsController.cs" />
     <Compile Include="Controllers\TracesController.cs" />
+    <Compile Include="Extensions\IDictionaryExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
