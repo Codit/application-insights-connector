@@ -138,7 +138,7 @@
         </member>
         <member name="M:TomKerkhove.Connectors.ApplicationInsights.Controllers.MetricsController.Metric(TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.SampledMetricMetadata)">
             <summary>
-            Tracks a custom metric to Azure Application Insights
+            Tracks a custom metric with sampling to Azure Application Insights
             </summary>
             <param name="metricMetadata">Metadata concerning the metric to track</param>
         </member>
