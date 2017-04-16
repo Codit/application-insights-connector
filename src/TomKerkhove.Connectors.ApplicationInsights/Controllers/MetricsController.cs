@@ -32,8 +32,9 @@ namespace TomKerkhove.Connectors.ApplicationInsights.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
+
         /// <summary>
-        /// Tracks a custom metric to Azure Application Insights
+        /// Tracks a custom metric with sampling to Azure Application Insights
         /// </summary>
         /// <param name="metricMetadata">Metadata concerning the metric to track</param>
         [HttpPost]
