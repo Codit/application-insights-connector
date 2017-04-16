@@ -12,9 +12,9 @@ namespace TomKerkhove.Connectors.ApplicationInsights.Controllers
     public class TracesController : ApiController
     {
         /// <summary>
-        /// Writes a trace to Azure Application Insights
+        /// Tracks a trace to Azure Application Insights
         /// </summary>
-        /// <param name="traceMetadata">Description about the requested trace</param>
+        /// <param name="traceMetadata">Metadata concerning the trace to track</param>
         [HttpPost]
         [Route("trace")]
         [SwaggerResponse(HttpStatusCode.NoContent, description: "Trace was successfully written to Azure Application Insights")]
@@ -31,7 +31,7 @@ namespace TomKerkhove.Connectors.ApplicationInsights.Controllers
             }
 
             var applicationInsightsTelemetry = new ApplicationInsightsTelemetry(traceMetadata.InstrumentationKey);
-            applicationInsightsTelemetry.Trace(traceMetadata.Message, traceMetadata.SeverityLevel, traceMetadata.CustomProperties);
+            applicationInsightsTelemetry.TrackTrace(traceMetadata.Message, traceMetadata.SeverityLevel, traceMetadata.CustomProperties);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

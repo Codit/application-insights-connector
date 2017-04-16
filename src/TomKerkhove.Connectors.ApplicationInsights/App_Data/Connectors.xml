@@ -20,15 +20,15 @@
             </summary>
             <param name="instrumentationKey">Instrumentation key to use</param>
         </member>
-        <member name="M:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.Trace(System.String,Microsoft.ApplicationInsights.DataContracts.SeverityLevel)">
+        <member name="M:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.TrackEvent(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
             <summary>
-                Write a trace to Application Insights
+                Write an event to Application Insights
             </summary>
-            <param name="message">Message to trace</param>
-            <param name="severityLevel">Severity level of the trace</param>
-            <exception cref="T:System.ArgumentNullException">Exception thrown when message was not valid</exception>
+            <param name="eventName">Name of the event occuring</param>
+            <param name="customProperties">Custom properties that provide context for the specific event</param>
+            <exception cref="T:System.ArgumentNullException">Exception thrown when event name was not valid</exception>
         </member>
-        <member name="M:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.Trace(System.String,Microsoft.ApplicationInsights.DataContracts.SeverityLevel,System.Collections.Generic.Dictionary{System.String,System.String})">
+        <member name="M:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.TrackTrace(System.String,Microsoft.ApplicationInsights.DataContracts.SeverityLevel,System.Collections.Generic.Dictionary{System.String,System.String})">
             <summary>
                 Write a trace to Application Insights
             </summary>
@@ -37,9 +37,19 @@
             <param name="customProperties">Custom properties that provide context for the specific trace</param>
             <exception cref="T:System.ArgumentNullException">Exception thrown when parameters are not valid</exception>
         </member>
+        <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.EventMetadata.Name">
+            <summary>
+                Name of the event
+            </summary>
+        </member>
         <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TelemetryMetadata.InstrumentationKey">
             <summary>
                 Instrumentation key of the Application Insights instance to send to (Optional)
+            </summary>
+        </member>
+        <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TelemetryMetadata.CustomProperties">
+            <summary>
+                Context about a specific trace (Optional)
             </summary>
         </member>
         <member name="T:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TraceMetadata">
@@ -57,10 +67,11 @@
                 Severity level of the trace. Informational by default
             </summary>
         </member>
-        <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TraceMetadata.CustomProperties">
+        <member name="M:TomKerkhove.Connectors.ApplicationInsights.Controllers.EventsController.WriteEvent(TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.EventMetadata)">
             <summary>
-                Context about a specific trace (Optional)
+            Tracks a custom event to Azure Application Insights
             </summary>
+            <param name="eventMetadata">Metadata concerning the event to track</param>
         </member>
         <member name="T:TomKerkhove.Connectors.ApplicationInsights.Controllers.TracesController">
             <summary>
@@ -69,9 +80,9 @@
         </member>
         <member name="M:TomKerkhove.Connectors.ApplicationInsights.Controllers.TracesController.Trace(TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TraceMetadata)">
             <summary>
-            Writes a trace to Azure Application Insights
+            Tracks a trace to Azure Application Insights
             </summary>
-            <param name="traceMetadata">Description about the requested trace</param>
+            <param name="traceMetadata">Metadata concerning the trace to track</param>
         </member>
         <member name="M:TomKerkhove.Connectors.ApplicationInsights.Guard.AgainstNullOrWhitespace(System.String,System.String,System.String,System.String,System.Int32)">
             <summary>

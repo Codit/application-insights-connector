@@ -16,3 +16,6 @@ Here is a list of the current features:
 	- Specify the telemetry id for each request to be more flexible and re-use one API App for multiple instances
 
 You can explore the Swagger of this connector [here](https://application-insights-connector.azurewebsites.net/swagger/).
+
+# Impact on pricing
+Bear in mind that each execution of a connector in Azure Logic Apps is billed. Finding a balance in using this connector is crucial as it might have a big impact on your Azure bill.

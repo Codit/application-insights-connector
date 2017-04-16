@@ -40,16 +40,17 @@ namespace TomKerkhove.Connectors.ApplicationInsights
         }
 
         /// <summary>
-        ///     Write a trace to Application Insights
+        ///     Write an event to Application Insights
         /// </summary>
-        /// <param name="message">Message to trace</param>
-        /// <param name="severityLevel">Severity level of the trace</param>
-        /// <exception cref="ArgumentNullException">Exception thrown when message was not valid</exception>
-        public void Trace(string message, SeverityLevel severityLevel)
+        /// <param name="eventName">Name of the event occuring</param>
+        /// <param name="customProperties">Custom properties that provide context for the specific event</param>
+        /// <exception cref="ArgumentNullException">Exception thrown when event name was not valid</exception>
+        public void TrackEvent(string eventName, Dictionary<string, string> customProperties)
         {
-            Guard.AgainstNullOrWhitespace(message, nameof(message));
-
-            Trace(message, severityLevel, new Dictionary<string, string>());
+            Guard.AgainstNullOrWhitespace(eventName, nameof(eventName));
+            Guard.AgainstNull(customProperties, nameof(customProperties));
+            
+            _telemetryClient.TrackEvent(eventName, customProperties);
         }
 
         /// <summary>
@@ -59,7 +60,7 @@ namespace TomKerkhove.Connectors.ApplicationInsights
         /// <param name="severityLevel">Severity level of the trace</param>
         /// <param name="customProperties">Custom properties that provide context for the specific trace</param>
         /// <exception cref="ArgumentNullException">Exception thrown when parameters are not valid</exception>
-        public void Trace(string message, SeverityLevel severityLevel, Dictionary<string, string> customProperties)
+        public void TrackTrace(string message, SeverityLevel severityLevel, Dictionary<string, string> customProperties)
         {
             Guard.AgainstNullOrWhitespace(message, nameof(message));
             Guard.AgainstNull(customProperties, nameof(customProperties));
