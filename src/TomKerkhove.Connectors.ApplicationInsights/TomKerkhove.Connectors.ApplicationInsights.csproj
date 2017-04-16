@@ -115,6 +115,7 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Contracts\v1\EventMetadata.cs" />
+    <Compile Include="Contracts\v1\MetricMetadata.cs" />
     <Compile Include="Contracts\v1\TelemetryMetadata.cs" />
     <Compile Include="Contracts\v1\TraceMetadata.cs" />
     <Compile Include="Controllers\EventsController.cs" />

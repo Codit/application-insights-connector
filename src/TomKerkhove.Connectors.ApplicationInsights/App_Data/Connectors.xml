@@ -20,6 +20,15 @@
             </summary>
             <param name="instrumentationKey">Instrumentation key to use</param>
         </member>
+        <member name="M:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.TrackMetric(System.String,System.Double,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+                Write an metric to Application Insights
+            </summary>
+            <param name="metricName">Name of the metric</param>
+            <param name="metricValue">Value of the metric</param>
+            <param name="customProperties">Custom properties that provide context for the specific metric</param>
+            <exception cref="T:System.ArgumentNullException">Exception thrown when event name was not valid</exception>
+        </member>
         <member name="M:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.TrackEvent(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
             <summary>
                 Write an event to Application Insights
@@ -40,6 +49,16 @@
         <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.EventMetadata.Name">
             <summary>
                 Name of the event
+            </summary>
+        </member>
+        <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.MetricMetadata.Name">
+            <summary>
+                Name of the metric
+            </summary>
+        </member>
+        <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.MetricMetadata.Value">
+            <summary>
+                Value of the metric
             </summary>
         </member>
         <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.TelemetryMetadata.InstrumentationKey">
@@ -67,11 +86,17 @@
                 Severity level of the trace. Informational by default
             </summary>
         </member>
-        <member name="M:TomKerkhove.Connectors.ApplicationInsights.Controllers.EventsController.WriteEvent(TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.EventMetadata)">
+        <member name="M:TomKerkhove.Connectors.ApplicationInsights.Controllers.EventsController.Event(TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.EventMetadata)">
             <summary>
             Tracks a custom event to Azure Application Insights
             </summary>
             <param name="eventMetadata">Metadata concerning the event to track</param>
+        </member>
+        <member name="M:TomKerkhove.Connectors.ApplicationInsights.Controllers.MetricsController.Metric(TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.MetricMetadata)">
+            <summary>
+            Tracks a custom metric to Azure Application Insights
+            </summary>
+            <param name="metricMetadata">Metadata concerning the metric to track</param>
         </member>
         <member name="T:TomKerkhove.Connectors.ApplicationInsights.Controllers.TracesController">
             <summary>

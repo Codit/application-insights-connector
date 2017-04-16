@@ -40,6 +40,21 @@ namespace TomKerkhove.Connectors.ApplicationInsights
         }
 
         /// <summary>
+        ///     Write an metric to Application Insights
+        /// </summary>
+        /// <param name="metricName">Name of the metric</param>
+        /// <param name="metricValue">Value of the metric</param>
+        /// <param name="customProperties">Custom properties that provide context for the specific metric</param>
+        /// <exception cref="ArgumentNullException">Exception thrown when event name was not valid</exception>
+        public void TrackMetric(string metricName, double metricValue, Dictionary<string, string> customProperties)
+        {
+            Guard.AgainstNullOrWhitespace(metricName, nameof(metricName));
+            Guard.AgainstNull(customProperties, nameof(customProperties));
+            
+            _telemetryClient.TrackMetric(metricName, metricValue, customProperties);
+        }
+
+        /// <summary>
         ///     Write an event to Application Insights
         /// </summary>
         /// <param name="eventName">Name of the event occuring</param>
@@ -49,7 +64,7 @@ namespace TomKerkhove.Connectors.ApplicationInsights
         {
             Guard.AgainstNullOrWhitespace(eventName, nameof(eventName));
             Guard.AgainstNull(customProperties, nameof(customProperties));
-            
+
             _telemetryClient.TrackEvent(eventName, customProperties);
         }
 
