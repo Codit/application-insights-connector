@@ -16,7 +16,8 @@ namespace TomKerkhove.Connectors.ApplicationInsights.Controllers
         /// </summary>
         /// <param name="traceMetadata">Metadata concerning the trace to track</param>
         [HttpPost]
-        [Route("trace")]
+        [Route("traces")]
+        [SwaggerOperation("traces")]
         [SwaggerResponse(HttpStatusCode.NoContent, description: "Trace was successfully written to Azure Application Insights")]
         [SwaggerResponse(HttpStatusCode.BadRequest, description: "Specified trace metadata was invalid")]
         public IHttpActionResult Trace([FromBody]TraceMetadata traceMetadata)
