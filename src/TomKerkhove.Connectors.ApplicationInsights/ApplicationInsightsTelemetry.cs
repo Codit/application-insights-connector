@@ -1,25 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.DataContracts;
+using TomKerkhove.Connectors.ApplicationInsights.Configuration;
 
 namespace TomKerkhove.Connectors.ApplicationInsights
 {
     public class ApplicationInsightsTelemetry
     {
-        private const string InstrumentationKeySettingName = "ApplicationInsights.InstrumentationKey";
         private readonly TelemetryClient _telemetryClient;
-
-        /// <summary>
-        ///     Instrumentation key used to write to Azure Application Insights
-        /// </summary>
-        public string InstrumentationKey { get; }
 
         /// <summary>
         ///     Constructor
         /// </summary>
-        public ApplicationInsightsTelemetry() : this(instrumentationKey: string.Empty)
+        public ApplicationInsightsTelemetry() : this(string.Empty)
         {
         }
 
@@ -30,7 +24,7 @@ namespace TomKerkhove.Connectors.ApplicationInsights
         public ApplicationInsightsTelemetry(string instrumentationKey)
         {
             InstrumentationKey = string.IsNullOrWhiteSpace(instrumentationKey)
-                ? GetInstrumentationKey()
+                ? ConfigurationProvider.GetSetting(Constants.Configuration.DefaultInstrumentationKeySettingName)
                 : instrumentationKey;
 
             _telemetryClient = new TelemetryClient
@@ -38,6 +32,11 @@ namespace TomKerkhove.Connectors.ApplicationInsights
                 InstrumentationKey = InstrumentationKey
             };
         }
+
+        /// <summary>
+        ///     Instrumentation key used to write to Azure Application Insights
+        /// </summary>
+        public string InstrumentationKey { get; }
 
         /// <summary>
         ///     Write an metric to Application Insights
@@ -65,7 +64,8 @@ namespace TomKerkhove.Connectors.ApplicationInsights
         /// <param name="standardDeviation">Standard deviation of this metric</param>
         /// <param name="customProperties">Custom properties that provide context for the specific metric</param>
         /// <exception cref="ArgumentNullException">Exception thrown when event name was not valid</exception>
-        public void TrackSampledMetric(string name, double sum, int? count, double? max, double? min, double? standardDeviation, Dictionary<string, string> customProperties)
+        public void TrackSampledMetric(string name, double sum, int? count, double? max, double? min,
+            double? standardDeviation, Dictionary<string, string> customProperties)
         {
             Guard.AgainstNullOrWhitespace(name, nameof(name));
             Guard.AgainstNull(customProperties, nameof(customProperties));
@@ -114,16 +114,17 @@ namespace TomKerkhove.Connectors.ApplicationInsights
             _telemetryClient.TrackTrace(message, severityLevel, customProperties);
         }
 
-        private string GetInstrumentationKey()
+        /// <summary>
+        ///     Writes an exception to Application Insights
+        /// </summary>
+        /// <param name="exception">Exception that occured</param>
+        /// <param name="customProperties">Custom properties that provide context for the specific exception</param>
+        public void TrackException(Exception exception, Dictionary<string, string> customProperties)
         {
-            var instrumentationKey = ConfigurationManager.AppSettings[InstrumentationKeySettingName];
+            Guard.AgainstNull(exception, nameof(exception));
+            Guard.AgainstNull(customProperties, nameof(customProperties));
 
-            if (string.IsNullOrWhiteSpace(instrumentationKey))
-            {
-                throw new InvalidOperationException($"Instrumentation key was not configured with setting {InstrumentationKeySettingName}");
-            }
-
-            return instrumentationKey;
+            _telemetryClient.TrackException(exception, customProperties);
         }
     }
 }

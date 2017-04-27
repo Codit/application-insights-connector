@@ -59,6 +59,13 @@
             <param name="customProperties">Custom properties that provide context for the specific trace</param>
             <exception cref="T:System.ArgumentNullException">Exception thrown when parameters are not valid</exception>
         </member>
+        <member name="M:TomKerkhove.Connectors.ApplicationInsights.Configuration.ConfigurationProvider.GetSetting(System.String)">
+            <summary>
+            Gets the value for a specific setting
+            </summary>
+            <param name="settingName">Name of the setting</param>
+            <returns>Configured value for the setting</returns>
+        </member>
         <member name="P:TomKerkhove.Connectors.ApplicationInsights.Contracts.v1.BasicMetricMetadata.Value">
             <summary>
                 Value of the metric
