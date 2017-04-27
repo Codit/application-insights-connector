@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using System.Web.Http.ExceptionHandling;
 using TomKerkhove.Connectors.ApplicationInsights.Configuration;
 
-namespace TomKerkhove.Connectors.ApplicationInsights.Loggers
+namespace TomKerkhove.Connectors.ApplicationInsights.ExceptionHandling
 {
-    public class OwinExceptionLogger : IExceptionLogger
+    public class ApplicationInsightsExceptionLogger : IExceptionLogger
     {
         private readonly ApplicationInsightsTelemetry _applicationInsightsTelemetry;
-        public OwinExceptionLogger()
+        public ApplicationInsightsExceptionLogger()
         {
             string instrumentationKey = ConfigurationProvider.GetSetting(Constants.Configuration.RuntimeInstrumentationKeySettingName);
             _applicationInsightsTelemetry = new ApplicationInsightsTelemetry(instrumentationKey);

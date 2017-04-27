@@ -4,7 +4,7 @@ using Microsoft.Owin;
 using Owin;
 using TomKerkhove.Connectors.ApplicationInsights;
 using TomKerkhove.Connectors.ApplicationInsights.Configuration;
-using TomKerkhove.Connectors.ApplicationInsights.Loggers;
+using TomKerkhove.Connectors.ApplicationInsights.ExceptionHandling;
 
 [assembly: OwinStartup(typeof(OwinStartup))]
 namespace TomKerkhove.Connectors.ApplicationInsights
@@ -16,7 +16,7 @@ namespace TomKerkhove.Connectors.ApplicationInsights
             var httpConfiguration = GlobalConfiguration.Configuration;
 
             ConfigureRoutes(httpConfiguration);
-            ConfigureLoggers(httpConfiguration);
+            ConfigureExceptionHandling(httpConfiguration);
             ConfigureSwagger();
 
             httpConfiguration.EnsureInitialized();
@@ -27,9 +27,10 @@ namespace TomKerkhove.Connectors.ApplicationInsights
             WebApiConfig.Register(httpConfiguration);
         }
 
-        private void ConfigureLoggers(HttpConfiguration httpConfiguration)
+        private void ConfigureExceptionHandling(HttpConfiguration httpConfiguration)
         {
-            httpConfiguration.Services.Add(typeof(IExceptionLogger), new OwinExceptionLogger());
+            httpConfiguration.Services.Replace(typeof(IExceptionHandler), new OwinExceptionHandler());
+            httpConfiguration.Services.Add(typeof(IExceptionLogger), new ApplicationInsightsExceptionLogger());
         }
 
         private void ConfigureSwagger()
