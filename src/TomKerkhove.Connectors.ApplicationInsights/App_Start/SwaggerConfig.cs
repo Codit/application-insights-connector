@@ -1,11 +1,6 @@
 using System.Web.Http;
-using WebActivatorEx;
 using Swashbuckle.Application;
-
-using TomKerkhove.Connectors.ApplicationInsights;
 using System.Web.Hosting;
-
-[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
 namespace TomKerkhove.Connectors.ApplicationInsights
 {
