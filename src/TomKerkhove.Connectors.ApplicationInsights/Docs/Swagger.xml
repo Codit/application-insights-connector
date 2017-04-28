@@ -4,11 +4,6 @@
         <name>TomKerkhove.Connectors.ApplicationInsights</name>
     </assembly>
     <members>
-        <member name="P:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.InstrumentationKey">
-            <summary>
-                Instrumentation key used to write to Azure Application Insights
-            </summary>
-        </member>
         <member name="M:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.#ctor">
             <summary>
                 Constructor
@@ -19,6 +14,11 @@
                 Constructor
             </summary>
             <param name="instrumentationKey">Instrumentation key to use</param>
+        </member>
+        <member name="P:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.InstrumentationKey">
+            <summary>
+                Instrumentation key used to write to Azure Application Insights
+            </summary>
         </member>
         <member name="M:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.TrackMetric(System.String,System.Double,System.Collections.Generic.Dictionary{System.String,System.String})">
             <summary>
@@ -58,6 +58,13 @@
             <param name="severityLevel">Severity level of the trace</param>
             <param name="customProperties">Custom properties that provide context for the specific trace</param>
             <exception cref="T:System.ArgumentNullException">Exception thrown when parameters are not valid</exception>
+        </member>
+        <member name="M:TomKerkhove.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.TrackException(System.Exception,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+                Writes an exception to Application Insights
+            </summary>
+            <param name="exception">Exception that occured</param>
+            <param name="customProperties">Custom properties that provide context for the specific exception</param>
         </member>
         <member name="M:TomKerkhove.Connectors.ApplicationInsights.Configuration.ConfigurationProvider.GetSetting(System.String)">
             <summary>
