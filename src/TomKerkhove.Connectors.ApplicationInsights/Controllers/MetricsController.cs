@@ -17,6 +17,7 @@ namespace TomKerkhove.Connectors.ApplicationInsights.Controllers
         [SwaggerOperation("metrics")]
         [SwaggerResponse(HttpStatusCode.NoContent, description: "Metric was successfully written to Azure Application Insights")]
         [SwaggerResponse(HttpStatusCode.BadRequest, description: "Specified metric metadata was invalid")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, description:"We were unable to succesfully process the request")]
         public IHttpActionResult Metric([FromBody]Contracts.v1.BasicMetricMetadata metricMetadata)
         {
             if (metricMetadata == null)
@@ -43,6 +44,7 @@ namespace TomKerkhove.Connectors.ApplicationInsights.Controllers
         [SwaggerOperation("metrics/sampling")]
         [SwaggerResponse(HttpStatusCode.NoContent, description: "Metric was successfully written to Azure Application Insights")]
         [SwaggerResponse(HttpStatusCode.BadRequest, description: "Specified metric metadata was invalid")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, description:"We were unable to succesfully process the request")]
         public IHttpActionResult Metric([FromBody]Contracts.v1.SampledMetricMetadata metricMetadata)
         {
             if (metricMetadata == null)

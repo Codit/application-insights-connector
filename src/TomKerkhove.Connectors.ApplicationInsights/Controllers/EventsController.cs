@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Web.Http;
 using Swashbuckle.Swagger.Annotations;
 
@@ -16,6 +17,7 @@ namespace TomKerkhove.Connectors.ApplicationInsights.Controllers
         [SwaggerOperation("events")]
         [SwaggerResponse(HttpStatusCode.NoContent, description: "Event was successfully written to Azure Application Insights")]
         [SwaggerResponse(HttpStatusCode.BadRequest, description: "Specified event metadata was invalid")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, description:"We were unable to succesfully process the request")]
         public IHttpActionResult Event([FromBody]Contracts.v1.EventMetadata eventMetadata)
         {
             if (eventMetadata == null)
