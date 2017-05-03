@@ -13,3 +13,9 @@ This is a workaround for this [UserVoice item](https://feedback.azure.com/forums
 **Pricing** - *Azure Logic Apps bills for each execution of a connector. Finding a balance in using this connector is crucial as it might have a big impact on your Azure bill.*
 
 -----------------------------------------------------------------
+
+# Documentation
+Documentation can be found in the [Wiki](./wiki).
+
+# License Information
+This is licensed under The MIT License (MIT). Which means that you can use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the web application. But you always need to state that Codit is the original author of this web application.
