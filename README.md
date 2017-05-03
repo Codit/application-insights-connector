@@ -15,7 +15,7 @@ This is a workaround for this [UserVoice item](https://feedback.azure.com/forums
 -----------------------------------------------------------------
 
 # Documentation
-Documentation can be found in the [Wiki](./wiki).
+Documentation can be found in the [Wiki](https://github.com/tomkerkhove/application-insights-connector/wiki).
 
 # License Information
 This is licensed under The MIT License (MIT). Which means that you can use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the web application. But you always need to state that Codit is the original author of this web application.
