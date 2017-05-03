@@ -1,134 +1,152 @@
 {
-  "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "siteName": {
-      "type": "string"
-    },
-    "hostingPlanName": {
-      "type": "string"
-    },
-    "siteLocation": {
-      "type": "string",
-      "allowedValues": [
-        "West US",
-        "East US",
-        "East US 2",
-        "Central US",
-        "South Central US",
-        "North Central US",
-        "North Europe",
-        "West Europe",
-        "East Asia",
-        "Southeast Asia",
-        "Japan West",
-        "Japan East",
-        "Brazil South",
-        "Australia East",
-        "Australia Southeast",
-        "Central India",
-        "South India",
-        "West India"
-      ]
-    },
-    "sku": {
-      "type": "string",
-      "allowedValues": [
-        "Free",
-        "Shared",
-        "Basic",
-        "Standard",
-        "Premium"
-      ],
-      "defaultValue": "Free"
-    },
-    "workerSize": {
-      "type": "string",
-      "allowedValues": [
-        "0",
-        "1",
-        "2"
-      ],
-      "defaultValue": "0"
-    },
-    "repoUrl": {
-      "type": "string"
-    },
-    "branch": {
-      "type": "string"
-    },
-    "defaultApplicationInsightsTelemetryId": {
-      "type": "string",
-      "defaultValue": ""
-    }
-  },
-  "resources": [
-    {
-      "apiVersion": "2014-06-01",
-      "name": "[parameters('hostingPlanName')]",
-      "type": "Microsoft.Web/serverFarms",
-      "location": "[parameters('siteLocation')]",
-      "properties": {
-        "name": "[parameters('hostingPlanName')]",
-        "sku": "[parameters('sku')]",
-        "workerSize": "[parameters('workerSize')]",
-        "numberOfWorkers": 1
-      }
-    },
-    {
-      "apiVersion": "2014-06-01",
-      "name": "[parameters('siteName')]",
-      "type": "Microsoft.Web/Sites",
-      "kind": "api",
-      "location": "[parameters('siteLocation')]",
-      "dependsOn": [
-        "[concat('Microsoft.Web/serverFarms/', parameters('hostingPlanName'))]"
-      ],
-      "tags": {
-        "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]": "empty"
-      },
-      "properties": {
-        "name": "[parameters('siteName')]",
-        "serverFarm": "[parameters('hostingPlanName')]"
-      },
-      "resources": [
-        {
-          "apiVersion": "2014-04-01",
-          "type": "config",
-          "name": "web",
-          "dependsOn": [
-            "[concat('Microsoft.Web/Sites/', parameters('siteName'))]"
-          ],
-          "properties": {
-            "appSettings": [
-              {
-                "name": "ApplicationInsights.InstrumentationKey",
-                "value": "[parameters('defaultApplicationInsightsTelemetryId')]"
-              }
-            ],
-            "cors": {
-              "allowedOrigins": [ "*" ]
-            },
-            "apiDefinition": {
-              "url": "[concat('https://', parameters('siteName'), '.azurewebsites.net/swagger/docs/v1')]"
-            }
-          }
-        },
-        {
-          "apiVersion": "2014-04-01",
-          "name": "web",
-          "type": "sourcecontrols",
-          "dependsOn": [
-            "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]",
-            "[concat('Microsoft.Web/Sites/', parameters('siteName'), '/config/web')]"
-          ],
-          "properties": {
-            "RepoUrl": "[parameters('repoUrl')]",
-            "branch": "[parameters('branch')]",
-            "IsManualIntegration": true
-          }
-        }
-      ]
-    }
-  ]
+	"$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"internalApplicationInsightsName": {
+			"type": "string",
+			"metadata": {
+				"description": "Enter the application insights name."
+			}
+		},
+		"internalApplicationInsightsType": {
+			"type": "string",
+			"defaultValue": "web",
+			"allowedValues": ["web",
+			"java",
+			"HockeyAppBridge",
+			"other"],
+			"metadata": {
+				"description": "Enter the application insights type."
+			}
+		},
+		"siteName": {
+			"type": "string"
+		},
+		"hostingPlanName": {
+			"type": "string"
+		},
+		"siteLocation": {
+			"type": "string",
+			"allowedValues": ["West US",
+			"East US",
+			"East US 2",
+			"Central US",
+			"South Central US",
+			"North Central US",
+			"North Europe",
+			"West Europe",
+			"East Asia",
+			"Southeast Asia",
+			"Japan West",
+			"Japan East",
+			"Brazil South",
+			"Australia East",
+			"Australia Southeast",
+			"Central India",
+			"South India",
+			"West India"]
+		},
+		"sku": {
+			"type": "string",
+			"allowedValues": ["Free",
+			"Shared",
+			"Basic",
+			"Standard",
+			"Premium"],
+			"defaultValue": "Free"
+		},
+		"workerSize": {
+			"type": "string",
+			"allowedValues": ["0",
+			"1",
+			"2"],
+			"defaultValue": "0"
+		},
+		"repoUrl": {
+			"type": "string"
+		},
+		"branch": {
+			"type": "string"
+		},
+		"defaultApplicationInsightsInstrumentationKey": {
+			"type": "string",
+			"defaultValue": ""
+		}
+	},
+	"resources": [{
+		"type": "microsoft.insights/components",
+		"kind": "[parameters('internalApplicationInsightsType')]",
+		"name": "[parameters('internalApplicationInsightsName')]",
+		"apiVersion": "2014-04-01",
+		"location": "[parameters('siteLocation')]",
+		"tags": {
+			
+		},
+		"properties": {
+			"ApplicationId": "[parameters('internalApplicationInsightsName')]"
+		},
+		"dependsOn": []
+	},
+	{
+		"apiVersion": "2014-06-01",
+		"name": "[parameters('hostingPlanName')]",
+		"type": "Microsoft.Web/serverFarms",
+		"location": "[parameters('siteLocation')]",
+		"properties": {
+			"name": "[parameters('hostingPlanName')]",
+			"sku": "[parameters('sku')]",
+			"workerSize": "[parameters('workerSize')]",
+			"numberOfWorkers": 1
+		}
+	},
+	{
+		"apiVersion": "2014-06-01",
+		"name": "[parameters('siteName')]",
+		"type": "Microsoft.Web/Sites",
+		"kind": "api",
+		"location": "[parameters('siteLocation')]",
+		"dependsOn": ["[concat('Microsoft.Web/serverFarms/', parameters('hostingPlanName'))]",
+		"[concat('microsoft.insights/components/', parameters('internalApplicationInsightsName'))]"],
+		"tags": {
+			"[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]": "empty"
+		},
+		"properties": {
+			"name": "[parameters('siteName')]",
+			"serverFarm": "[parameters('hostingPlanName')]"
+		},
+		"resources": [{
+			"apiVersion": "2014-04-01",
+			"type": "config",
+			"name": "web",
+			"dependsOn": ["[concat('Microsoft.Web/Sites/', parameters('siteName'))]"],
+			"properties": {
+				"appSettings": [{
+					"name": "ApplicationInsights.Runtime.InstrumentationKey",
+					"value": "[reference(resourceId('microsoft.insights/components/', parameters('internalApplicationInsightsName'))).InstrumentationKey]"
+				},
+				{
+					"name": "ApplicationInsights.InstrumentationKey",
+					"value": "[parameters('defaultApplicationInsightsInstrumentationKey')]"
+				}],
+				"cors": {
+					"allowedOrigins": ["*"]
+				},
+				"apiDefinition": {
+					"url": "[concat('https://', parameters('siteName'), '.azurewebsites.net/swagger/docs/v1')]"
+				}
+			}
+		},
+		{
+			"apiVersion": "2014-04-01",
+			"name": "web",
+			"type": "sourcecontrols",
+			"dependsOn": ["[resourceId('Microsoft.Web/Sites', parameters('siteName'))]",
+			"[concat('Microsoft.Web/Sites/', parameters('siteName'), '/config/web')]"],
+			"properties": {
+				"RepoUrl": "[parameters('repoUrl')]",
+				"branch": "[parameters('branch')]",
+				"IsManualIntegration": true
+			}
+		}]
+	}]
 }
