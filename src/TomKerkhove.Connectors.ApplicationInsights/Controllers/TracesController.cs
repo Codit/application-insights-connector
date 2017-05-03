@@ -20,6 +20,7 @@ namespace TomKerkhove.Connectors.ApplicationInsights.Controllers
         [SwaggerOperation("traces")]
         [SwaggerResponse(HttpStatusCode.NoContent, description: "Trace was successfully written to Azure Application Insights")]
         [SwaggerResponse(HttpStatusCode.BadRequest, description: "Specified trace metadata was invalid")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, description:"We were unable to succesfully process the request")]
         public IHttpActionResult Trace([FromBody]TraceMetadata traceMetadata)
         {
             if (traceMetadata == null)
