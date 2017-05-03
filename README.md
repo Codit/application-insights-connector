@@ -17,7 +17,7 @@ This is a workaround for this [UserVoice item](https://feedback.azure.com/forums
 # Using the Application Insights connector
 Want to use this connector yourself? you can!
 
-## Provisioning
+## Installation
 TBW
 [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/) 
 
