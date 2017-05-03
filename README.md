@@ -14,21 +14,35 @@ This is a workaround for this [UserVoice item](https://feedback.azure.com/forums
 
 -----------------------------------------------------------------
 
+# Using the Application Insights connector
+Want to use this connector yourself? you can!
+
+## Provisioning
+TBW
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/) 
+
+## Configuration
+TBW
+
+```
+<appSettings>
+    <add key="ApplicationInsights.InstrumentationKey" value="_Appliation-Insights-Instrumentation-Key_" />
+    <add key="ApplicationInsights.Runtime.InstrumentationKey" value="_Appliation-Insights-for-API-App-Instrumentation-Key_" />
+</appSettings>
+```
+
 # Features
 Here is a list of the current features:
 
-- **Support for writing traces**
+- **Support for Traces**
 	- Specify severity level. *(Optional)*
-- **Support for metrics**
+- **Support for Metrics**
 	- Support for simple metrics as well as sampling
-- **Support for custom events**
+- **Support for Custom Events**
 - **Support for providing context** *(optional*)
 	- Provide more information about the current context of each trace, custom event & metric
 - **Support for cross Application Insights usage**
-	- Specify a fixed telemetry id on the API App itself for all requests
-	- Specify the telemetry id for each request to be more flexible and re-use one API App for multiple instances
+	- Specify a fixed telemetry id to being used on the API App itself for all requests from the Logic App
+	- Specify the telemetry id for each request to be more flexible and re-use one API App for multiple Logic App instances
 
 You can explore the Swagger of this connector [here](https://application-insights-connector.azurewebsites.net/swagger/).
-
-# Impact on pricing
-Bear in mind that each execution of a connector in Azure Logic Apps is billed. Finding a balance in using this connector is crucial as it might have a big impact on your Azure bill.
