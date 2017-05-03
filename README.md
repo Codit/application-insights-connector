@@ -14,12 +14,12 @@ This is a workaround for this [UserVoice item](https://feedback.azure.com/forums
 
 -----------------------------------------------------------------
 
-# Using the Application Insights connector
+## Using the Application Insights connector
 Want to use this connector yourself? you can!
 
 
 
-## Installation
+### Installation
 All you have to do is host this connector as an **Azure API App** that you can use in your Logic App. 
 More information can be found [here](https://docs.microsoft.com/en-us/azure/logic-apps/logic-apps-custom-hosted-api).
 
@@ -27,7 +27,7 @@ Don't want to go through it yourself? Just deploy it with a wizard!
 
 [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/) 
 
-## Configuration
+### Configuration
 TBW
 
 ```
@@ -37,7 +37,7 @@ TBW
 </appSettings>
 ```
 
-# Features
+## Features
 Here is a list of the current features:
 
 - **Support for Traces**
