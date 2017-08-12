@@ -1,4 +1,5 @@
 using System.Web.Http;
+using System.Web.Hosting;
 using Swashbuckle.Application;
 
 namespace Codit.Connectors.ApplicationInsights
