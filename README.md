@@ -1,4 +1,4 @@
-# Logic App Connector - Azure Application Insights
+# Azure Application Insights connector for Logic Apps
 
 ![Build Status](https://tomkerkhove.visualstudio.com/_apis/public/build/definitions/c8608c00-3475-43b1-944b-c86b95825768/7/badge)
 
