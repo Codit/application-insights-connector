@@ -3,7 +3,6 @@ using System.Web.Http.ExceptionHandling;
 using Microsoft.Owin;
 using Owin;
 using Codit.Connectors.ApplicationInsights;
-using Codit.Connectors.ApplicationInsights.Configuration;
 using Codit.Connectors.ApplicationInsights.ExceptionHandling;
 
 [assembly: OwinStartup(typeof(OwinStartup))]
