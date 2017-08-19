@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Swashbuckle.Swagger.Annotations;
@@ -22,7 +22,7 @@ namespace Codit.Connectors.ApplicationInsights.Controllers
         {
             if (metricMetadata == null)
             {
-                return BadRequest("No metadata about the metric was specified");
+                return BadRequet("No metadata about the metric was specified");
             }
             if (string.IsNullOrWhiteSpace(metricMetadata.Name))
             {
