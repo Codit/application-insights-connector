@@ -22,7 +22,7 @@ namespace Codit.Connectors.ApplicationInsights.Controllers
         {
             if (metricMetadata == null)
             {
-                return BadRequet("No metadata about the metric was specified");
+                return BadRequest("No metadata about the metric was specified");
             }
             if (string.IsNullOrWhiteSpace(metricMetadata.Name))
             {
