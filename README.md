@@ -1,6 +1,6 @@
 # Azure Application Insights connector for Logic Apps
 
-[![Build status](https://ci.appveyor.com/api/projects/status/bhnw8p5k4m9x92qg?svg=true)](https://ci.appveyor.com/project/tomkerkhove/application-insights-connector)
+[![Build status](https://ci.appveyor.com/api/projects/status/bhnw8p5k4m9x92qg?svg=true)](https://ci.appveyor.com/project/tomkerkhove/application-insights-connector)[![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/CoditEU/application-insights-connector/blob/master/LICENSE)
 
 Deploy this Web API as an Azure API App and use it in your Azure Logic Apps to send traces, metrics and custom events to Azure Application Insights.
 This is a workaround for this [UserVoice item](https://feedback.azure.com/forums/287593-logic-apps/suggestions/16833526-supporting-ai-for-logic-apps)
