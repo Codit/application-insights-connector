@@ -1,0 +1,28 @@
+# do not build on tags (GitHub and BitBucket)
+skip_tags: true
+
+# skip commits if it's media/docs only
+skip_commits:
+  files:
+    - '**/*.md'
+    - '**/images/*'
+    - '**/icons/*'
+
+image: Visual Studio 2017
+
+# restor NuGet packages
+before_build:
+  - nuget restore src\Codit.Connectors.sln
+  - cmd: echo %appveyor_build_version%
+
+# build platform, i.e. x86, x64, Any CPU. This setting is optional.
+platform: Any CPU
+
+# build configuration, i.e. Debug, Release, etc.
+configuration: Release
+
+# build solution
+build:
+  parallel: true
+  project: src/Codit.Connectors.sln
+  verbosity: minimal
