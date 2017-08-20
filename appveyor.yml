@@ -26,3 +26,10 @@ build:
   parallel: true
   project: src/Codit.Connectors.sln
   verbosity: minimal
+
+# update GitHub PR
+notifications:
+  - provider: GitHubPullRequest
+    auth_token:
+      secure: S3WbNSGF+Rn/x56J6MrSGThEd0cCpZUU48heYYPVMDsgmOHUHe8UXHQTFjFV3hk1 # encrypted by AppVeyor
+    template: "{{#passed}}:white_check_mark:{{/passed}}{{#failed}}:x:{{/failed}} [Build {{&projectName}} {{buildVersion}} {{status}}]({{buildUrl}}) (commit {{commitUrl}} by @{{&commitAuthorUsername}})"
