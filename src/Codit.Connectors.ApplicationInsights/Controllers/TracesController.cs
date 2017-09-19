@@ -2,6 +2,8 @@
 using System.Web.Http;
 using Swashbuckle.Swagger.Annotations;
 using Codit.Connectors.ApplicationInsights.Contracts.v1;
+using Codit.Connectors.ApplicationInsights.Filters;
+using System.Net.Http;
 
 namespace Codit.Connectors.ApplicationInsights.Controllers
 {
@@ -9,6 +11,7 @@ namespace Codit.Connectors.ApplicationInsights.Controllers
     /// Provides operations related to tracing to Azure Application Insights
     /// </summary>
     [RoutePrefix("api/v1")]
+    [ClientKeyAuthentication]
     public class TracesController : ApiController
     {
         /// <summary>
@@ -33,6 +36,11 @@ namespace Codit.Connectors.ApplicationInsights.Controllers
             }
 
             var applicationInsightsTelemetry = new ApplicationInsightsTelemetry(traceMetadata.InstrumentationKey);
+            if (string.IsNullOrWhiteSpace(applicationInsightsTelemetry.InstrumentationKey) || applicationInsightsTelemetry.InstrumentationKey.ToUpperInvariant() == Constants.Configuration.DefaultInstrumentationKeySettingValue)
+            {
+                var msg = new HttpResponseMessage(HttpStatusCode.InternalServerError) { ReasonPhrase = "InstrumentationKey missing." };
+                throw new HttpResponseException(msg);
+            }
             applicationInsightsTelemetry.TrackTrace(traceMetadata.Message, traceMetadata.SeverityLevel, traceMetadata.CustomProperties);
 
             return StatusCode(HttpStatusCode.NoContent);

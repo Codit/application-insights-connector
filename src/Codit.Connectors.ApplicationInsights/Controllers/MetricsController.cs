@@ -2,10 +2,13 @@
 using System.Threading.Tasks;
 using System.Web.Http;
 using Swashbuckle.Swagger.Annotations;
+using Codit.Connectors.ApplicationInsights.Filters;
+using System.Net.Http;
 
 namespace Codit.Connectors.ApplicationInsights.Controllers
 {
     [RoutePrefix("api/v1")]
+    [ClientKeyAuthentication]
     public class MetricsController : ApiController
     {
         /// <summary>
@@ -30,6 +33,11 @@ namespace Codit.Connectors.ApplicationInsights.Controllers
             }
 
             var applicationInsightsTelemetry = new ApplicationInsightsTelemetry(metricMetadata.InstrumentationKey);
+            if (string.IsNullOrWhiteSpace(applicationInsightsTelemetry.InstrumentationKey) || applicationInsightsTelemetry.InstrumentationKey.ToUpperInvariant() == Constants.Configuration.DefaultInstrumentationKeySettingValue)
+            {
+                var msg = new HttpResponseMessage(HttpStatusCode.InternalServerError) { ReasonPhrase = "InstrumentationKey missing." };
+                throw new HttpResponseException(msg);
+            }
             applicationInsightsTelemetry.TrackMetric(metricMetadata.Name, metricMetadata.Value, metricMetadata.CustomProperties);
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -61,6 +69,11 @@ namespace Codit.Connectors.ApplicationInsights.Controllers
             }
 
             var applicationInsightsTelemetry = new ApplicationInsightsTelemetry(metricMetadata.InstrumentationKey);
+            if (string.IsNullOrWhiteSpace(applicationInsightsTelemetry.InstrumentationKey) || applicationInsightsTelemetry.InstrumentationKey.ToUpperInvariant() == Constants.Configuration.DefaultInstrumentationKeySettingValue)
+            {
+                var msg = new HttpResponseMessage(HttpStatusCode.InternalServerError) { ReasonPhrase = "InstrumentationKey missing." };
+                throw new HttpResponseException(msg);
+            }
             applicationInsightsTelemetry.TrackSampledMetric(metricMetadata.Name, metricMetadata.Sum.Value, metricMetadata.Count, metricMetadata.Max, metricMetadata.Min, metricMetadata.StandardDeviation, metricMetadata.CustomProperties);
 
             return StatusCode(HttpStatusCode.NoContent);

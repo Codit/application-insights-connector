@@ -2,10 +2,13 @@
 using System.Net;
 using System.Web.Http;
 using Swashbuckle.Swagger.Annotations;
+using Codit.Connectors.ApplicationInsights.Filters;
+using System.Net.Http;
 
 namespace Codit.Connectors.ApplicationInsights.Controllers
 {
     [RoutePrefix("api/v1")]
+    [ClientKeyAuthentication]
     public class EventsController : ApiController
     {
         /// <summary>
@@ -30,6 +33,12 @@ namespace Codit.Connectors.ApplicationInsights.Controllers
             }
 
             var applicationInsightsTelemetry = new ApplicationInsightsTelemetry(eventMetadata.InstrumentationKey);
+            if (string.IsNullOrWhiteSpace(applicationInsightsTelemetry.InstrumentationKey) || applicationInsightsTelemetry.InstrumentationKey.ToUpperInvariant() == Constants.Configuration.DefaultInstrumentationKeySettingValue)
+            {
+                var msg = new HttpResponseMessage(HttpStatusCode.InternalServerError) { ReasonPhrase = "InstrumentationKey missing." };
+                throw new HttpResponseException(msg);
+            }
+
             applicationInsightsTelemetry.TrackEvent(eventMetadata.Name, eventMetadata.CustomProperties);
 
             return StatusCode(HttpStatusCode.NoContent);

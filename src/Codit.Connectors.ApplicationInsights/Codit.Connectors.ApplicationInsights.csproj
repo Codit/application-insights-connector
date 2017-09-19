@@ -139,6 +139,7 @@
     <Compile Include="Controllers\TracesController.cs" />
     <Compile Include="ExceptionHandling\OwinExceptionHandler.cs" />
     <Compile Include="Extensions\IDictionaryExtensions.cs" />
+    <Compile Include="Filters\ClientKeyAuthenticationAttribute.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="ExceptionHandling\ApplicationInsightsExceptionLogger.cs" />
     <Compile Include="OwinStartup.cs" />

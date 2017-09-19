@@ -18,4 +18,24 @@ namespace Codit.Connectors.ApplicationInsights.Configuration
             return settingValue;
         }
     }
+
+    public class Settings
+    {
+        public static string SharedAccessKeyHeaderName()
+        {
+            return ConfigurationProvider.GetSetting("Authentication.SharedAccessKeyHeaderName");
+        }
+        public static bool IsSharedAccessKeyEnabled()
+        {
+            bool isSharedAccessKeyEnabled;
+
+            var rawSetting = ConfigurationProvider.GetSetting("Authentication.EnableSharedAccessKey");
+            return bool.TryParse(rawSetting, out isSharedAccessKeyEnabled) ? isSharedAccessKeyEnabled : true;
+        }
+
+        public static string KeyPool()
+        {
+            return ConfigurationProvider.GetSetting("Authentication.KeyPool");
+        }
+    }
 }
