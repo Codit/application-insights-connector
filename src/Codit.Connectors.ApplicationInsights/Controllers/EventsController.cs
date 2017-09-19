@@ -35,8 +35,7 @@ namespace Codit.Connectors.ApplicationInsights.Controllers
             var applicationInsightsTelemetry = new ApplicationInsightsTelemetry(eventMetadata.InstrumentationKey);
             if (string.IsNullOrWhiteSpace(applicationInsightsTelemetry.InstrumentationKey) || applicationInsightsTelemetry.InstrumentationKey.ToUpperInvariant() == Constants.Configuration.DefaultInstrumentationKeySettingValue)
             {
-                var msg = new HttpResponseMessage(HttpStatusCode.InternalServerError) { ReasonPhrase = "InstrumentationKey missing." };
-                throw new HttpResponseException(msg);
+                return Content(HttpStatusCode.InternalServerError, Constants.Errors.MissingInstrumentationKey, GlobalConfiguration.Configuration.Formatters.JsonFormatter, "text/plain");
             }
 
             applicationInsightsTelemetry.TrackEvent(eventMetadata.Name, eventMetadata.CustomProperties);

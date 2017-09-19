@@ -18,16 +18,16 @@ namespace Codit.Connectors.ApplicationInsights.Filters
         {
             await Task.Run(() =>
             {
-                if (!Settings.IsSharedAccessKeyEnabled()) return;
+                if (!SharedAccessKeySettings.IsSharedAccessKeyEnabled()) return;
 
                 IEnumerable<string> requestHeaders;
-                context.Request.Headers.TryGetValues(Settings.SharedAccessKeyHeaderName(), out requestHeaders);
+                context.Request.Headers.TryGetValues(SharedAccessKeySettings.SharedAccessKeyHeaderName(), out requestHeaders);
                 if (requestHeaders == null)
                 {
                     context.ErrorResult = new AuthenticationFailureResult();
                     return;
                 }
-                if (!Settings.KeyPool().Contains(String.Format("|{0}|", requestHeaders.First())))
+                if (!SharedAccessKeySettings.AccessKeyPool().Contains(String.Format("|{0}|", requestHeaders.First())))
                     context.ErrorResult = new AuthenticationFailureResult();
             });
         }

@@ -7,10 +7,12 @@ namespace Codit.Connectors.ApplicationInsights
 {
     public class SwaggerConfig
     {
+        private static readonly bool _isSharedAccessKeyEnabled = SharedAccessKeySettings.IsSharedAccessKeyEnabled();
+        private static readonly string _sharedAccessKeyHeaderName = SharedAccessKeySettings.SharedAccessKeyHeaderName();
+
         public static void Register()
         {
             var thisAssembly = typeof(SwaggerConfig).Assembly;
-
             EnableSwagger();
         }
 
@@ -75,11 +77,11 @@ namespace Codit.Connectors.ApplicationInsights
                     //    .Description("Basic HTTP Authentication");
                     //
 
-                    if (Settings.IsSharedAccessKeyEnabled())
+                    if (_isSharedAccessKeyEnabled)
                     {
-                        c.ApiKey(Settings.SharedAccessKeyHeaderName())
+                        c.ApiKey(_sharedAccessKeyHeaderName)
                             .Description("Shared access key authentication.")
-                            .Name(Settings.SharedAccessKeyHeaderName())
+                            .Name(_sharedAccessKeyHeaderName)
                             .In("header");
                     }
 
@@ -275,7 +277,8 @@ namespace Codit.Connectors.ApplicationInsights
                 // If your API supports ApiKey, you can override the default values.
                 // "apiKeyIn" can either be "query" or "header"
                 //
-                if (Settings.IsSharedAccessKeyEnabled()) c.EnableApiKeySupport(Settings.SharedAccessKeyHeaderName(), "header");
+                if (_isSharedAccessKeyEnabled)
+                    c.EnableApiKeySupport(_sharedAccessKeyHeaderName, "header");
             });
         }
 

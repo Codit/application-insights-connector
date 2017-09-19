@@ -4,6 +4,7 @@ using Swashbuckle.Swagger.Annotations;
 using Codit.Connectors.ApplicationInsights.Contracts.v1;
 using Codit.Connectors.ApplicationInsights.Filters;
 using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Codit.Connectors.ApplicationInsights.Controllers
 {
@@ -23,7 +24,7 @@ namespace Codit.Connectors.ApplicationInsights.Controllers
         [SwaggerOperation("traces")]
         [SwaggerResponse(HttpStatusCode.NoContent, description: "Trace was successfully written to Azure Application Insights")]
         [SwaggerResponse(HttpStatusCode.BadRequest, description: "Specified trace metadata was invalid")]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, description:"We were unable to succesfully process the request")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, description: "We were unable to succesfully process the request")]
         public IHttpActionResult Trace([FromBody]TraceMetadata traceMetadata)
         {
             if (traceMetadata == null)
@@ -38,8 +39,7 @@ namespace Codit.Connectors.ApplicationInsights.Controllers
             var applicationInsightsTelemetry = new ApplicationInsightsTelemetry(traceMetadata.InstrumentationKey);
             if (string.IsNullOrWhiteSpace(applicationInsightsTelemetry.InstrumentationKey) || applicationInsightsTelemetry.InstrumentationKey.ToUpperInvariant() == Constants.Configuration.DefaultInstrumentationKeySettingValue)
             {
-                var msg = new HttpResponseMessage(HttpStatusCode.InternalServerError) { ReasonPhrase = "InstrumentationKey missing." };
-                throw new HttpResponseException(msg);
+                return Content(HttpStatusCode.InternalServerError, Constants.Errors.MissingInstrumentationKey, GlobalConfiguration.Configuration.Formatters.JsonFormatter, "text/plain");
             }
             applicationInsightsTelemetry.TrackTrace(traceMetadata.Message, traceMetadata.SeverityLevel, traceMetadata.CustomProperties);
 
