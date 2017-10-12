@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Swashbuckle.Swagger.Annotations;
@@ -20,7 +21,7 @@ namespace Codit.Connectors.ApplicationInsights.Controllers
         [SwaggerOperation("metrics")]
         [SwaggerResponse(HttpStatusCode.NoContent, description: "Metric was successfully written to Azure Application Insights")]
         [SwaggerResponse(HttpStatusCode.BadRequest, description: "Specified metric metadata was invalid")]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, description:"We were unable to succesfully process the request")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, description: "We were unable to succesfully process the request")]
         public IHttpActionResult Metric([FromBody]Contracts.v1.BasicMetricMetadata metricMetadata)
         {
             if (metricMetadata == null)
@@ -33,7 +34,7 @@ namespace Codit.Connectors.ApplicationInsights.Controllers
             }
 
             var applicationInsightsTelemetry = new ApplicationInsightsTelemetry(metricMetadata.InstrumentationKey);
-            if (string.IsNullOrWhiteSpace(applicationInsightsTelemetry.InstrumentationKey) || applicationInsightsTelemetry.InstrumentationKey.ToUpperInvariant() == Constants.Configuration.DefaultInstrumentationKeySettingValue)
+            if (string.IsNullOrWhiteSpace(applicationInsightsTelemetry.InstrumentationKey) || string.Equals(applicationInsightsTelemetry.InstrumentationKey, Constants.Configuration.Telemetry.DefaultInstrumentationKeySettingValue, StringComparison.InvariantCultureIgnoreCase))
             {
                 return Content(HttpStatusCode.InternalServerError, Constants.Errors.MissingInstrumentationKey, GlobalConfiguration.Configuration.Formatters.JsonFormatter, "text/plain");
             }
@@ -51,7 +52,7 @@ namespace Codit.Connectors.ApplicationInsights.Controllers
         [SwaggerOperation("metrics/sampling")]
         [SwaggerResponse(HttpStatusCode.NoContent, description: "Metric was successfully written to Azure Application Insights")]
         [SwaggerResponse(HttpStatusCode.BadRequest, description: "Specified metric metadata was invalid")]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, description:"We were unable to succesfully process the request")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, description: "We were unable to succesfully process the request")]
         public IHttpActionResult Metric([FromBody]Contracts.v1.SampledMetricMetadata metricMetadata)
         {
             if (metricMetadata == null)
@@ -68,7 +69,7 @@ namespace Codit.Connectors.ApplicationInsights.Controllers
             }
 
             var applicationInsightsTelemetry = new ApplicationInsightsTelemetry(metricMetadata.InstrumentationKey);
-            if (string.IsNullOrWhiteSpace(applicationInsightsTelemetry.InstrumentationKey) || applicationInsightsTelemetry.InstrumentationKey.ToUpperInvariant() == Constants.Configuration.DefaultInstrumentationKeySettingValue)
+            if (string.IsNullOrWhiteSpace(applicationInsightsTelemetry.InstrumentationKey) || string.Equals(applicationInsightsTelemetry.InstrumentationKey, Constants.Configuration.Telemetry.DefaultInstrumentationKeySettingValue, StringComparison.InvariantCultureIgnoreCase))
             {
                 return Content(HttpStatusCode.InternalServerError, Constants.Errors.MissingInstrumentationKey, GlobalConfiguration.Configuration.Formatters.JsonFormatter, "text/plain");
             }

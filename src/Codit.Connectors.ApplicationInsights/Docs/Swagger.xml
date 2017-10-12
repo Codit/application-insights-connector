@@ -158,12 +158,12 @@
         </member>
         <member name="T:Codit.Connectors.ApplicationInsights.Controllers.TracesController">
             <summary>
-            Provides operations related to tracing to Azure Application Insights
+                Provides operations related to tracing to Azure Application Insights
             </summary>
         </member>
         <member name="M:Codit.Connectors.ApplicationInsights.Controllers.TracesController.Trace(Codit.Connectors.ApplicationInsights.Contracts.v1.TraceMetadata)">
             <summary>
-            Tracks a trace to Azure Application Insights
+                Tracks a trace to Azure Application Insights
             </summary>
             <param name="traceMetadata">Metadata concerning the trace to track</param>
         </member>

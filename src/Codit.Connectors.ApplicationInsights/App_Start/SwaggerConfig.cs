@@ -7,8 +7,8 @@ namespace Codit.Connectors.ApplicationInsights
 {
     public class SwaggerConfig
     {
-        private static readonly bool _isSharedAccessKeyEnabled = SharedAccessKeySettings.IsSharedAccessKeyEnabled();
-        private static readonly string _sharedAccessKeyHeaderName = SharedAccessKeySettings.SharedAccessKeyHeaderName();
+        private static readonly bool _isSharedAccessKeyEnabled = SharedAccessKeySettings.IsEnabled();
+        private static readonly string _sharedAccessKeyHeaderName = SharedAccessKeySettings.GetHeaderName();
 
         public static void Register()
         {

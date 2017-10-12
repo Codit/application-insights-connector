@@ -9,11 +9,12 @@ namespace Codit.Connectors.ApplicationInsights.ExceptionHandling
 {
     public class ApplicationInsightsExceptionLogger : IExceptionLogger
     {
-        private readonly ApplicationInsightsTelemetry _applicationInsightsTelemetry;
+        private readonly ApplicationInsightsTelemetry applicationInsightsTelemetry;
+
         public ApplicationInsightsExceptionLogger()
         {
-            string instrumentationKey = ConfigurationProvider.GetSetting(Constants.Configuration.RuntimeInstrumentationKeySettingName);
-            _applicationInsightsTelemetry = new ApplicationInsightsTelemetry(instrumentationKey);
+            string instrumentationKey = ConfigurationProvider.GetSetting(Constants.Configuration.Telemetry.RuntimeInstrumentationKeySettingName);
+            applicationInsightsTelemetry = new ApplicationInsightsTelemetry(instrumentationKey);
         }
 
         public Task LogAsync(ExceptionLoggerContext context, CancellationToken cancellationToken)
@@ -39,7 +40,7 @@ namespace Codit.Connectors.ApplicationInsights.ExceptionHandling
             var exceptionMessage = context.Exception.Message;
             customProperties.Add("ExceptionMessage", exceptionMessage);
 
-            _applicationInsightsTelemetry.TrackException(context.Exception, customProperties);
+            applicationInsightsTelemetry.TrackException(context.Exception, customProperties);
         }
     }
 }

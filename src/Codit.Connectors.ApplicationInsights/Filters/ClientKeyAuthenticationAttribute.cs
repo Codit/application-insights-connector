@@ -13,12 +13,12 @@ namespace Codit.Connectors.ApplicationInsights.Filters
         {
             await Task.Run(() =>
             {
-                if (!SharedAccessKeySettings.IsSharedAccessKeyEnabled())
+                if (!SharedAccessKeySettings.IsEnabled())
                 {
                     return;
                 }
 
-                context.Request.Headers.TryGetValues(SharedAccessKeySettings.SharedAccessKeyHeaderName(), out var requestHeaders);
+                context.Request.Headers.TryGetValues(SharedAccessKeySettings.GetHeaderName(), out var requestHeaders);
                 if (requestHeaders == null)
                 {
                     context.ErrorResult = new AuthenticationFailureResult();

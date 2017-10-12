@@ -24,7 +24,7 @@ namespace Codit.Connectors.ApplicationInsights
         public ApplicationInsightsTelemetry(string instrumentationKey)
         {
             InstrumentationKey = string.IsNullOrWhiteSpace(instrumentationKey)
-                ? ConfigurationProvider.GetSetting(Constants.Configuration.DefaultInstrumentationKeySettingName)
+                ? ConfigurationProvider.GetSetting(Constants.Configuration.Telemetry.DefaultInstrumentationKeySettingName)
                 : instrumentationKey;
 
             _telemetryClient = new TelemetryClient
