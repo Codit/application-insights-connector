@@ -127,7 +127,6 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Configuration\ConfigurationProvider.cs" />
-    <Compile Include="Configuration\SettingNotFoundException.cs" />
     <Compile Include="Configuration\SharedAccessKeySettings.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Contracts\v1\BasicMetricMetadata.cs" />
