@@ -18,43 +18,30 @@ namespace Codit.Connectors.ApplicationInsights.Filters
         {
             await Task.Run(() =>
             {
-                if (!SharedAccessKeySettings.IsSharedAccessKeyEnabled()) return;
+                if (!SharedAccessKeySettings.IsSharedAccessKeyEnabled())
+                {
+                    return;
+                }
 
-                IEnumerable<string> requestHeaders;
-                context.Request.Headers.TryGetValues(SharedAccessKeySettings.SharedAccessKeyHeaderName(), out requestHeaders);
+                context.Request.Headers.TryGetValues(SharedAccessKeySettings.SharedAccessKeyHeaderName(), out var requestHeaders);
                 if (requestHeaders == null)
                 {
                     context.ErrorResult = new AuthenticationFailureResult();
                     return;
                 }
-                if (!SharedAccessKeySettings.AccessKeyPool().Contains(String.Format("|{0}|", requestHeaders.First())))
+
+                if (!SharedAccessKeySettings.AccessKeyPool().Contains($"|{requestHeaders.First()}|"))
+                {
                     context.ErrorResult = new AuthenticationFailureResult();
+                }
             });
         }
 
-        public async Task ChallengeAsync(HttpAuthenticationChallengeContext context, CancellationToken cancellationToken)
+        public Task ChallengeAsync(HttpAuthenticationChallengeContext context, CancellationToken cancellationToken)
         {
-            await Task.Run(() =>
-            {
-
-            });
+            return Task.CompletedTask;
         }
 
-        public bool AllowMultiple
-        {
-            get { return false; }
-        }
-
-        private class AuthenticationFailureResult : IHttpActionResult
-        {
-            public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
-            {
-                return Task.FromResult(Execute());
-            }
-            private HttpResponseMessage Execute()
-            {
-                return new HttpResponseMessage(HttpStatusCode.Unauthorized);
-            }
-        }
+        public bool AllowMultiple => false;
     }
 }
