@@ -8,15 +8,8 @@ namespace Codit.Connectors.ApplicationInsights
 {
     public class ApplicationInsightsTelemetry
     {
-        private readonly TelemetryClient _telemetryClient;
-
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        public ApplicationInsightsTelemetry() : this(string.Empty)
-        {
-        }
-
+        private readonly TelemetryClient telemetryClient;
+        
         /// <summary>
         ///     Constructor
         /// </summary>
@@ -27,7 +20,7 @@ namespace Codit.Connectors.ApplicationInsights
                 ? ConfigurationProvider.GetSetting(Constants.Configuration.Telemetry.DefaultInstrumentationKeySettingName)
                 : instrumentationKey;
 
-            _telemetryClient = new TelemetryClient
+            telemetryClient = new TelemetryClient
             {
                 InstrumentationKey = InstrumentationKey
             };
@@ -50,7 +43,7 @@ namespace Codit.Connectors.ApplicationInsights
             Guard.AgainstNullOrWhitespace(name, nameof(name));
             Guard.AgainstNull(customProperties, nameof(customProperties));
 
-            _telemetryClient.TrackMetric(name, value, customProperties);
+            telemetryClient.TrackMetric(name, value, customProperties);
         }
 
         /// <summary>
@@ -82,7 +75,7 @@ namespace Codit.Connectors.ApplicationInsights
 
             metricTelemetry.Properties.AddRange(customProperties);
 
-            _telemetryClient.TrackMetric(metricTelemetry);
+            telemetryClient.TrackMetric(metricTelemetry);
         }
 
         /// <summary>
@@ -96,7 +89,7 @@ namespace Codit.Connectors.ApplicationInsights
             Guard.AgainstNullOrWhitespace(name, nameof(name));
             Guard.AgainstNull(customProperties, nameof(customProperties));
 
-            _telemetryClient.TrackEvent(name, customProperties);
+            telemetryClient.TrackEvent(name, customProperties);
         }
 
         /// <summary>
@@ -111,7 +104,7 @@ namespace Codit.Connectors.ApplicationInsights
             Guard.AgainstNullOrWhitespace(message, nameof(message));
             Guard.AgainstNull(customProperties, nameof(customProperties));
 
-            _telemetryClient.TrackTrace(message, severityLevel, customProperties);
+            telemetryClient.TrackTrace(message, severityLevel, customProperties);
         }
 
         /// <summary>
@@ -124,7 +117,7 @@ namespace Codit.Connectors.ApplicationInsights
             Guard.AgainstNull(exception, nameof(exception));
             Guard.AgainstNull(customProperties, nameof(customProperties));
 
-            _telemetryClient.TrackException(exception, customProperties);
+            telemetryClient.TrackException(exception, customProperties);
         }
     }
 }

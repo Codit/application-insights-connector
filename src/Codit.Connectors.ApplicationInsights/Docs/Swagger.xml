@@ -4,11 +4,6 @@
         <name>Codit.Connectors.ApplicationInsights</name>
     </assembly>
     <members>
-        <member name="M:Codit.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.#ctor">
-            <summary>
-                Constructor
-            </summary>
-        </member>
         <member name="M:Codit.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.#ctor(System.String)">
             <summary>
                 Constructor
