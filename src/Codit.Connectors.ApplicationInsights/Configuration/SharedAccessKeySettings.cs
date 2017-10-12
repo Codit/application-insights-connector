@@ -1,7 +1,4 @@
-﻿using System.Configuration;
-
-
-namespace Codit.Connectors.ApplicationInsights.Configuration
+﻿namespace Codit.Connectors.ApplicationInsights.Configuration
 {
     public class SharedAccessKeySettings
     {
