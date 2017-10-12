@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Web.Http;
+using Codit.Connectors.ApplicationInsights.Exceptions;
 using Swashbuckle.Swagger.Annotations;
 using Codit.Connectors.ApplicationInsights.Filters;
 
@@ -31,15 +32,17 @@ namespace Codit.Connectors.ApplicationInsights.Controllers
                 return BadRequest("No event name was specified");
             }
 
-            var applicationInsightsTelemetry = new ApplicationInsightsTelemetry(eventMetadata.InstrumentationKey);
-            if (string.IsNullOrWhiteSpace(applicationInsightsTelemetry.InstrumentationKey) || string.Equals(applicationInsightsTelemetry.InstrumentationKey, Constants.Configuration.Telemetry.DefaultInstrumentationKeySettingValue, StringComparison.InvariantCultureIgnoreCase))
+            try
             {
-                return Content(HttpStatusCode.InternalServerError, Constants.Errors.MissingInstrumentationKey, GlobalConfiguration.Configuration.Formatters.JsonFormatter, "text/plain");
+                var applicationInsightsTelemetry = new ApplicationInsightsTelemetry(eventMetadata.InstrumentationKey);
+                applicationInsightsTelemetry.TrackEvent(eventMetadata.Name, eventMetadata.CustomProperties);
+
+                return StatusCode(HttpStatusCode.NoContent);
             }
-
-            applicationInsightsTelemetry.TrackEvent(eventMetadata.Name, eventMetadata.CustomProperties);
-
-            return StatusCode(HttpStatusCode.NoContent);
+            catch (InstrumentationKeyNotSpecifiedException)
+            {
+                return Content(HttpStatusCode.InternalServerError, Constants.Errors.MissingInstrumentationKey);
+            }
         }
     }
 }

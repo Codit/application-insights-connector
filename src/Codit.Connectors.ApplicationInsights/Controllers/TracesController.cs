@@ -1,7 +1,7 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Web.Http;
 using Codit.Connectors.ApplicationInsights.Contracts.v1;
+using Codit.Connectors.ApplicationInsights.Exceptions;
 using Codit.Connectors.ApplicationInsights.Filters;
 using Swashbuckle.Swagger.Annotations;
 
@@ -35,14 +35,17 @@ namespace Codit.Connectors.ApplicationInsights.Controllers
                 return BadRequest("No message was specified");
             }
 
-            var applicationInsightsTelemetry = new ApplicationInsightsTelemetry(traceMetadata.InstrumentationKey);
-            if (string.IsNullOrWhiteSpace(applicationInsightsTelemetry.InstrumentationKey) || string.Equals(applicationInsightsTelemetry.InstrumentationKey, Constants.Configuration.Telemetry.DefaultInstrumentationKeySettingValue, StringComparison.InvariantCultureIgnoreCase))
+            try
             {
-                return Content(HttpStatusCode.InternalServerError, Constants.Errors.MissingInstrumentationKey, GlobalConfiguration.Configuration.Formatters.JsonFormatter, "text/plain");
-            }
-            applicationInsightsTelemetry.TrackTrace(traceMetadata.Message, traceMetadata.SeverityLevel, traceMetadata.CustomProperties);
+                var applicationInsightsTelemetry = new ApplicationInsightsTelemetry(traceMetadata.InstrumentationKey);
+                applicationInsightsTelemetry.TrackTrace(traceMetadata.Message, traceMetadata.SeverityLevel, traceMetadata.CustomProperties);
 
-            return StatusCode(HttpStatusCode.NoContent);
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            catch (InstrumentationKeyNotSpecifiedException)
+            {
+                return Content(HttpStatusCode.InternalServerError, Constants.Errors.MissingInstrumentationKey);
+            }
         }
     }
 }

@@ -8,7 +8,6 @@
             {
                 public const string RuntimeInstrumentationKeySettingName = "ApplicationInsights.Runtime.InstrumentationKey";
                 public const string DefaultInstrumentationKeySettingName = "ApplicationInsights.InstrumentationKey";
-                public const string DefaultInstrumentationKeySettingValue = "_APPLICATION-INSIGHTS-INSTRUMENTATION-KEY_";
             }
             
             public static class Authentication
@@ -23,7 +22,7 @@
         }
         public static class Errors
         {
-            public const string MissingInstrumentationKey = "InstrumentationKey is missing.";
+            public const string MissingInstrumentationKey = "No instrumentation key was specified or configured";
         }
     }
 }

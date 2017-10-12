@@ -139,6 +139,7 @@
     <Compile Include="Controllers\MetricsController.cs" />
     <Compile Include="Controllers\TracesController.cs" />
     <Compile Include="ExceptionHandling\OwinExceptionHandler.cs" />
+    <Compile Include="Exceptions\InstrumentationKeyNotSpecifiedException.cs" />
     <Compile Include="Extensions\IDictionaryExtensions.cs" />
     <Compile Include="Filters\AuthenticationFailureResult.cs" />
     <Compile Include="Filters\SharedAccessKeyAuthenticationAttribute.cs" />
