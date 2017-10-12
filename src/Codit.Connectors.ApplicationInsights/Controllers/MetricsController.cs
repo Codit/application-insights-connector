@@ -9,7 +9,7 @@ using System.Net.Http;
 namespace Codit.Connectors.ApplicationInsights.Controllers
 {
     [RoutePrefix("api/v1")]
-    [ClientKeyAuthentication]
+    [SharedAccessKeyAuthentication]
     public class MetricsController : ApiController
     {
         /// <summary>

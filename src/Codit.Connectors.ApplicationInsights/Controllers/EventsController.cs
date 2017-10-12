@@ -7,7 +7,7 @@ using Codit.Connectors.ApplicationInsights.Filters;
 namespace Codit.Connectors.ApplicationInsights.Controllers
 {
     [RoutePrefix("api/v1")]
-    [ClientKeyAuthentication]
+    [SharedAccessKeyAuthentication]
     public class EventsController : ApiController
     {
         /// <summary>

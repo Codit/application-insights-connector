@@ -11,7 +11,7 @@ namespace Codit.Connectors.ApplicationInsights.Controllers
     ///     Provides operations related to tracing to Azure Application Insights
     /// </summary>
     [RoutePrefix("api/v1")]
-    [ClientKeyAuthentication]
+    [SharedAccessKeyAuthentication]
     public class TracesController : ApiController
     {
         /// <summary>
