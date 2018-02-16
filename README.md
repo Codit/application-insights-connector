@@ -9,9 +9,11 @@ This is a workaround for this [UserVoice item](https://feedback.azure.com/forums
 
 -----------------------------------------------------------------
 
-**Pricing** - *Azure Logic Apps bills for each execution of a connector. Finding a balance in using this connector is crucial as it might have a big impact on your Azure bill.*
+:rotating_light: **Pricing** - *Azure Logic Apps bills for each execution of a connector. Finding a balance in using this connector is crucial as it might have a big impact on your Azure bill.*
 
 -----------------------------------------------------------------
+
+![Codit](./media/codit.png)
 
 # Documentation
 Documentation can be found in the [Wiki](https://github.com/CoditEU/application-insights-connector/wiki).
