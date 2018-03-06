@@ -4,11 +4,6 @@
         <name>Codit.Connectors.ApplicationInsights</name>
     </assembly>
     <members>
-        <member name="M:Codit.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.#ctor">
-            <summary>
-                Constructor
-            </summary>
-        </member>
         <member name="M:Codit.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.#ctor(System.String)">
             <summary>
                 Constructor
@@ -19,6 +14,21 @@
             <summary>
                 Instrumentation key used to write to Azure Application Insights
             </summary>
+        </member>
+        <member name="M:Codit.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.TrackEvent(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+                Write an event to Application Insights
+            </summary>
+            <param name="name">Name of the event occuring</param>
+            <param name="customProperties">Custom properties that provide context for the specific event</param>
+            <exception cref="T:System.ArgumentNullException">Exception thrown when event name was not valid</exception>
+        </member>
+        <member name="M:Codit.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.TrackException(System.Exception,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+                Writes an exception to Application Insights
+            </summary>
+            <param name="exception">Exception that occured</param>
+            <param name="customProperties">Custom properties that provide context for the specific exception</param>
         </member>
         <member name="M:Codit.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.TrackMetric(System.String,System.Double,System.Collections.Generic.Dictionary{System.String,System.String})">
             <summary>
@@ -42,14 +52,6 @@
             <param name="customProperties">Custom properties that provide context for the specific metric</param>
             <exception cref="T:System.ArgumentNullException">Exception thrown when event name was not valid</exception>
         </member>
-        <member name="M:Codit.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.TrackEvent(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
-            <summary>
-                Write an event to Application Insights
-            </summary>
-            <param name="name">Name of the event occuring</param>
-            <param name="customProperties">Custom properties that provide context for the specific event</param>
-            <exception cref="T:System.ArgumentNullException">Exception thrown when event name was not valid</exception>
-        </member>
         <member name="M:Codit.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.TrackTrace(System.String,Microsoft.ApplicationInsights.DataContracts.SeverityLevel,System.Collections.Generic.Dictionary{System.String,System.String})">
             <summary>
                 Write a trace to Application Insights
@@ -58,13 +60,6 @@
             <param name="severityLevel">Severity level of the trace</param>
             <param name="customProperties">Custom properties that provide context for the specific trace</param>
             <exception cref="T:System.ArgumentNullException">Exception thrown when parameters are not valid</exception>
-        </member>
-        <member name="M:Codit.Connectors.ApplicationInsights.ApplicationInsightsTelemetry.TrackException(System.Exception,System.Collections.Generic.Dictionary{System.String,System.String})">
-            <summary>
-                Writes an exception to Application Insights
-            </summary>
-            <param name="exception">Exception that occured</param>
-            <param name="customProperties">Custom properties that provide context for the specific exception</param>
         </member>
         <member name="M:Codit.Connectors.ApplicationInsights.Configuration.ConfigurationProvider.GetSetting(System.String)">
             <summary>
@@ -146,24 +141,24 @@
         </member>
         <member name="M:Codit.Connectors.ApplicationInsights.Controllers.MetricsController.Metric(Codit.Connectors.ApplicationInsights.Contracts.v1.BasicMetricMetadata)">
             <summary>
-            Tracks a custom metric to Azure Application Insights
+                Tracks a custom metric to Azure Application Insights
             </summary>
             <param name="metricMetadata">Metadata concerning the metric to track</param>
         </member>
         <member name="M:Codit.Connectors.ApplicationInsights.Controllers.MetricsController.Metric(Codit.Connectors.ApplicationInsights.Contracts.v1.SampledMetricMetadata)">
             <summary>
-            Tracks a custom metric with sampling to Azure Application Insights
+                Tracks a custom metric with sampling to Azure Application Insights
             </summary>
             <param name="metricMetadata">Metadata concerning the metric to track</param>
         </member>
         <member name="T:Codit.Connectors.ApplicationInsights.Controllers.TracesController">
             <summary>
-            Provides operations related to tracing to Azure Application Insights
+                Provides operations related to tracing to Azure Application Insights
             </summary>
         </member>
         <member name="M:Codit.Connectors.ApplicationInsights.Controllers.TracesController.Trace(Codit.Connectors.ApplicationInsights.Contracts.v1.TraceMetadata)">
             <summary>
-            Tracks a trace to Azure Application Insights
+                Tracks a trace to Azure Application Insights
             </summary>
             <param name="traceMetadata">Metadata concerning the trace to track</param>
         </member>

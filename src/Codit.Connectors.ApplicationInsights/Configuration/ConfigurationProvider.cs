@@ -18,4 +18,4 @@ namespace Codit.Connectors.ApplicationInsights.Configuration
             return settingValue;
         }
     }
-}
+ }

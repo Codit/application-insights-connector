@@ -7,10 +7,12 @@ namespace Codit.Connectors.ApplicationInsights
 {
     public class SwaggerConfig
     {
+        private static readonly bool _isSharedAccessKeyEnabled = SharedAccessKeySettings.IsEnabled();
+        private static readonly string _sharedAccessKeyHeaderName = SharedAccessKeySettings.GetHeaderName();
+
         public static void Register()
         {
             var thisAssembly = typeof(SwaggerConfig).Assembly;
-
             EnableSwagger();
         }
 
@@ -27,7 +29,7 @@ namespace Codit.Connectors.ApplicationInsights
         private static SwaggerEnabledConfiguration EnableSwaggerGeneration()
         {
             var swaggerConfiguration = GlobalConfiguration.Configuration
-                .EnableSwagger(c =>
+                .EnableSwagger(swaggerDocsConfiguration =>
                 {
                     // By default, the service root url is inferred from the request used to access the docs.
                     // However, there may be situations (e.g. proxy and load-balanced environments) where this does not
@@ -39,17 +41,17 @@ namespace Codit.Connectors.ApplicationInsights
                     // the docs is taken as the default. If your API supports multiple schemes and you want to be explicit
                     // about them, you can use the "Schemes" option as shown below.
                     //
-                    c.Schemes(new[] { "http", "https" });
+                    swaggerDocsConfiguration.Schemes(new[] { "http", "https" });
 
                     // Use "SingleApiVersion" to describe a single version API. Swagger 2.0 includes an "Info" object to
                     // hold additional metadata for an API. Version and title are required but you can also provide
                     // additional fields by chaining methods off SingleApiVersion.
                     //
-                    c.SingleApiVersion("v1", "Application Insights Connector");
+                    swaggerDocsConfiguration.SingleApiVersion("v1", "Application Insights Connector");
 
                     // If you want the output Swagger docs to be indented properly, enable the "PrettyPrint" option.
                     //
-                    c.PrettyPrint();
+                    swaggerDocsConfiguration.PrettyPrint();
 
                     // If your API has multiple versions, use "MultipleApiVersions" instead of "SingleApiVersion".
                     // In this case, you must provide a lambda that tells Swashbuckle which actions should be
@@ -74,6 +76,15 @@ namespace Codit.Connectors.ApplicationInsights
                     //c.BasicAuth("basic")
                     //    .Description("Basic HTTP Authentication");
                     //
+
+                    if (_isSharedAccessKeyEnabled)
+                    {
+                        swaggerDocsConfiguration.ApiKey(_sharedAccessKeyHeaderName)
+                            .Description("Shared access key authentication.")
+                            .Name(_sharedAccessKeyHeaderName)
+                            .In("header");
+                    }
+
                     // NOTE: You must also configure 'EnableApiKeySupport' below in the SwaggerUI section
                     //c.ApiKey("apiKey")
                     //    .Description("API Key Authentication")
@@ -114,7 +125,7 @@ namespace Codit.Connectors.ApplicationInsights
                     // those comments into the generated docs and UI. You can enable this by providing the path to one or
                     // more Xml comment files.
                     //
-                    c.IncludeXmlComments(GetXmlCommentsPath());
+                    swaggerDocsConfiguration.IncludeXmlComments(GetXmlCommentsPath());
 
                     // Swashbuckle makes a best attempt at generating Swagger compliant JSON schemas for the various types
                     // exposed in your API. However, there may be occasions when more control of the output is needed.
@@ -156,7 +167,7 @@ namespace Codit.Connectors.ApplicationInsights
                     // enum type. Swashbuckle will honor this change out-of-the-box. However, if you use a different
                     // approach to serialize enums as strings, you can also force Swashbuckle to describe them as strings.
                     //
-                    c.DescribeAllEnumsAsStrings();
+                    swaggerDocsConfiguration.DescribeAllEnumsAsStrings();
 
                     // Similar to Schema filters, Swashbuckle also supports Operation and Document filters:
                     //
@@ -195,12 +206,12 @@ namespace Codit.Connectors.ApplicationInsights
 
         private static void EnableSwaggerUi(SwaggerEnabledConfiguration swaggerEnabledConfiguration)
         {
-            swaggerEnabledConfiguration.EnableSwaggerUi(c =>
+            swaggerEnabledConfiguration.EnableSwaggerUi(swaggerUiConfiguration =>
             {
                 // Use the "DocumentTitle" option to change the Document title.
                 // Very helpful when you have multiple Swagger pages open, to tell them apart.
                 //
-                c.DocumentTitle("Application Insights Connector");
+                swaggerUiConfiguration.DocumentTitle("Application Insights Connector");
 
                 // Use the "InjectStylesheet" option to enrich the UI with one or more additional CSS stylesheets.
                 // The file must be included in your project as an "Embedded Resource", and then the resource's
@@ -266,7 +277,10 @@ namespace Codit.Connectors.ApplicationInsights
                 // If your API supports ApiKey, you can override the default values.
                 // "apiKeyIn" can either be "query" or "header"
                 //
-                //c.EnableApiKeySupport("apiKey", "header");
+                if (_isSharedAccessKeyEnabled)
+                {
+                    swaggerUiConfiguration.EnableApiKeySupport(_sharedAccessKeyHeaderName, "header");
+                }
             });
         }
 

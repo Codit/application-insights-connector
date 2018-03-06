@@ -1,21 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using Codit.Connectors.ApplicationInsights.Configuration;
+using Codit.Connectors.ApplicationInsights.Exceptions;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.DataContracts;
-using Codit.Connectors.ApplicationInsights.Configuration;
 
 namespace Codit.Connectors.ApplicationInsights
 {
     public class ApplicationInsightsTelemetry
     {
-        private readonly TelemetryClient _telemetryClient;
-
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        public ApplicationInsightsTelemetry() : this(string.Empty)
-        {
-        }
+        private const string DefaultInstrumentationKey = "_APPLICATION-INSIGHTS-INSTRUMENTATION-KEY_";
+        private readonly TelemetryClient telemetryClient;
 
         /// <summary>
         ///     Constructor
@@ -23,11 +18,9 @@ namespace Codit.Connectors.ApplicationInsights
         /// <param name="instrumentationKey">Instrumentation key to use</param>
         public ApplicationInsightsTelemetry(string instrumentationKey)
         {
-            InstrumentationKey = string.IsNullOrWhiteSpace(instrumentationKey)
-                ? ConfigurationProvider.GetSetting(Constants.Configuration.DefaultInstrumentationKeySettingName)
-                : instrumentationKey;
+            InstrumentationKey = DetermineTelemetryKey(instrumentationKey);
 
-            _telemetryClient = new TelemetryClient
+            telemetryClient = new TelemetryClient
             {
                 InstrumentationKey = InstrumentationKey
             };
@@ -37,6 +30,33 @@ namespace Codit.Connectors.ApplicationInsights
         ///     Instrumentation key used to write to Azure Application Insights
         /// </summary>
         public string InstrumentationKey { get; }
+
+        /// <summary>
+        ///     Write an event to Application Insights
+        /// </summary>
+        /// <param name="name">Name of the event occuring</param>
+        /// <param name="customProperties">Custom properties that provide context for the specific event</param>
+        /// <exception cref="ArgumentNullException">Exception thrown when event name was not valid</exception>
+        public void TrackEvent(string name, Dictionary<string, string> customProperties)
+        {
+            Guard.AgainstNullOrWhitespace(name, nameof(name));
+            Guard.AgainstNull(customProperties, nameof(customProperties));
+
+            telemetryClient.TrackEvent(name, customProperties);
+        }
+
+        /// <summary>
+        ///     Writes an exception to Application Insights
+        /// </summary>
+        /// <param name="exception">Exception that occured</param>
+        /// <param name="customProperties">Custom properties that provide context for the specific exception</param>
+        public void TrackException(Exception exception, Dictionary<string, string> customProperties)
+        {
+            Guard.AgainstNull(exception, nameof(exception));
+            Guard.AgainstNull(customProperties, nameof(customProperties));
+
+            telemetryClient.TrackException(exception, customProperties);
+        }
 
         /// <summary>
         ///     Write an metric to Application Insights
@@ -50,7 +70,7 @@ namespace Codit.Connectors.ApplicationInsights
             Guard.AgainstNullOrWhitespace(name, nameof(name));
             Guard.AgainstNull(customProperties, nameof(customProperties));
 
-            _telemetryClient.TrackMetric(name, value, customProperties);
+            telemetryClient.TrackMetric(name, value, customProperties);
         }
 
         /// <summary>
@@ -82,21 +102,7 @@ namespace Codit.Connectors.ApplicationInsights
 
             metricTelemetry.Properties.AddRange(customProperties);
 
-            _telemetryClient.TrackMetric(metricTelemetry);
-        }
-
-        /// <summary>
-        ///     Write an event to Application Insights
-        /// </summary>
-        /// <param name="name">Name of the event occuring</param>
-        /// <param name="customProperties">Custom properties that provide context for the specific event</param>
-        /// <exception cref="ArgumentNullException">Exception thrown when event name was not valid</exception>
-        public void TrackEvent(string name, Dictionary<string, string> customProperties)
-        {
-            Guard.AgainstNullOrWhitespace(name, nameof(name));
-            Guard.AgainstNull(customProperties, nameof(customProperties));
-
-            _telemetryClient.TrackEvent(name, customProperties);
+            telemetryClient.TrackMetric(metricTelemetry);
         }
 
         /// <summary>
@@ -111,20 +117,21 @@ namespace Codit.Connectors.ApplicationInsights
             Guard.AgainstNullOrWhitespace(message, nameof(message));
             Guard.AgainstNull(customProperties, nameof(customProperties));
 
-            _telemetryClient.TrackTrace(message, severityLevel, customProperties);
+            telemetryClient.TrackTrace(message, severityLevel, customProperties);
         }
 
-        /// <summary>
-        ///     Writes an exception to Application Insights
-        /// </summary>
-        /// <param name="exception">Exception that occured</param>
-        /// <param name="customProperties">Custom properties that provide context for the specific exception</param>
-        public void TrackException(Exception exception, Dictionary<string, string> customProperties)
+        private string DetermineTelemetryKey(string instrumentationKey)
         {
-            Guard.AgainstNull(exception, nameof(exception));
-            Guard.AgainstNull(customProperties, nameof(customProperties));
+            var determinedInstrumentationKey = string.IsNullOrWhiteSpace(instrumentationKey)
+                ? ConfigurationProvider.GetSetting(Constants.Configuration.Telemetry.DefaultInstrumentationKeySettingName)
+                : instrumentationKey;
 
-            _telemetryClient.TrackException(exception, customProperties);
+            if (string.Equals(determinedInstrumentationKey, DefaultInstrumentationKey, StringComparison.InvariantCultureIgnoreCase))
+            {
+                throw new InstrumentationKeyNotSpecifiedException();
+            }
+
+            return determinedInstrumentationKey;
         }
     }
 }
