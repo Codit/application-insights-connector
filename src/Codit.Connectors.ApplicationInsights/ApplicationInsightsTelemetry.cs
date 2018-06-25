@@ -40,7 +40,7 @@ namespace Codit.Connectors.ApplicationInsights
         public void TrackEvent(string name, Dictionary<string, string> customProperties)
         {
             Guard.AgainstNullOrWhitespace(name, nameof(name));
-            Guard.AgainstNull(customProperties, nameof(customProperties));
+            Guard.NotNull(customProperties, nameof(customProperties));
 
             telemetryClient.TrackEvent(name, customProperties);
         }
