@@ -16,7 +16,7 @@ namespace System.Collections.Generic
         /// <exception cref="InvalidOperationException">Exception thrown when key from source dictionary already exists in the destionation dictionary</exception>
         public static void AddRange<TKey, TValue>(this IDictionary<TKey, TValue> destination, IDictionary<TKey, TValue> source)
         {
-            Guard.AgainstNull(destination, nameof(destination));
+            Guard.Guard.NotNull(destination, nameof(destination));
 
             if (source == null || source.Any() == false)
             {

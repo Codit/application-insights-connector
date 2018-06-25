@@ -11,7 +11,7 @@ namespace Codit.Connectors.ApplicationInsights.Configuration
         /// <returns>Configured value for the setting</returns>
         public static string GetSetting(string settingName)
         {
-            Guard.AgainstNullOrWhitespace(settingName, nameof(settingName));
+            Guard.Guard.NotNullOrWhitespace(settingName, nameof(settingName));
 
             var settingValue = ConfigurationManager.AppSettings[settingName];
 
