@@ -7,6 +7,8 @@ using Microsoft.ApplicationInsights.DataContracts;
 
 namespace Codit.Connectors.ApplicationInsights
 {
+    using Guard;
+
     public class ApplicationInsightsTelemetry
     {
         private const string DefaultInstrumentationKey = "_APPLICATION-INSIGHTS-INSTRUMENTATION-KEY_";
@@ -39,8 +41,8 @@ namespace Codit.Connectors.ApplicationInsights
         /// <exception cref="ArgumentNullException">Exception thrown when event name was not valid</exception>
         public void TrackEvent(string name, Dictionary<string, string> customProperties)
         {
-            Guard.AgainstNullOrWhitespace(name, nameof(name));
-            Guard.AgainstNull(customProperties, nameof(customProperties));
+            Guard.NotNullOrWhitespace(name, nameof(name));
+            Guard.NotNull(customProperties, nameof(customProperties));
 
             telemetryClient.TrackEvent(name, customProperties);
         }
@@ -52,8 +54,8 @@ namespace Codit.Connectors.ApplicationInsights
         /// <param name="customProperties">Custom properties that provide context for the specific exception</param>
         public void TrackException(Exception exception, Dictionary<string, string> customProperties)
         {
-            Guard.AgainstNull(exception, nameof(exception));
-            Guard.AgainstNull(customProperties, nameof(customProperties));
+            Guard.NotNull(exception, nameof(exception));
+            Guard.NotNull(customProperties, nameof(customProperties));
 
             telemetryClient.TrackException(exception, customProperties);
         }
@@ -67,8 +69,8 @@ namespace Codit.Connectors.ApplicationInsights
         /// <exception cref="ArgumentNullException">Exception thrown when event name was not valid</exception>
         public void TrackMetric(string name, double value, Dictionary<string, string> customProperties)
         {
-            Guard.AgainstNullOrWhitespace(name, nameof(name));
-            Guard.AgainstNull(customProperties, nameof(customProperties));
+            Guard.NotNullOrWhitespace(name, nameof(name));
+            Guard.NotNull(customProperties, nameof(customProperties));
 
             telemetryClient.TrackMetric(name, value, customProperties);
         }
@@ -87,8 +89,8 @@ namespace Codit.Connectors.ApplicationInsights
         public void TrackSampledMetric(string name, double sum, int? count, double? max, double? min,
             double? standardDeviation, Dictionary<string, string> customProperties)
         {
-            Guard.AgainstNullOrWhitespace(name, nameof(name));
-            Guard.AgainstNull(customProperties, nameof(customProperties));
+            Guard.NotNullOrWhitespace(name, nameof(name));
+            Guard.NotNull(customProperties, nameof(customProperties));
 
             var metricTelemetry = new MetricTelemetry
             {
@@ -114,8 +116,8 @@ namespace Codit.Connectors.ApplicationInsights
         /// <exception cref="ArgumentNullException">Exception thrown when parameters are not valid</exception>
         public void TrackTrace(string message, SeverityLevel severityLevel, Dictionary<string, string> customProperties)
         {
-            Guard.AgainstNullOrWhitespace(message, nameof(message));
-            Guard.AgainstNull(customProperties, nameof(customProperties));
+            Guard.NotNullOrWhitespace(message, nameof(message));
+            Guard.NotNull(customProperties, nameof(customProperties));
 
             telemetryClient.TrackTrace(message, severityLevel, customProperties);
         }

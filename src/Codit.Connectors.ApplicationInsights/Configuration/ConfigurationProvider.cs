@@ -2,6 +2,8 @@ using System.Configuration;
 
 namespace Codit.Connectors.ApplicationInsights.Configuration
 {
+    using Guard;
+
     public class ConfigurationProvider
     {
         /// <summary>
@@ -11,7 +13,7 @@ namespace Codit.Connectors.ApplicationInsights.Configuration
         /// <returns>Configured value for the setting</returns>
         public static string GetSetting(string settingName)
         {
-            Guard.AgainstNullOrWhitespace(settingName, nameof(settingName));
+            Guard.NotNullOrWhitespace(settingName, nameof(settingName));
 
             var settingValue = ConfigurationManager.AppSettings[settingName];
 
